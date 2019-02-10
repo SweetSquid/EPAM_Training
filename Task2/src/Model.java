@@ -30,6 +30,10 @@ public class Model {
         return allAttempts;
     }
 
+    public int getAmmountAttempts(){
+        return allAttempts.size();
+    }
+
     public void addAttempt(int attempt){
         allAttempts.add(attempt);
     }

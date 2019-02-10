@@ -9,7 +9,6 @@ public class Controller {
     private Model model;
     private View view;
     private Scanner sc = new Scanner(System.in);
-    private int attempts = 0;
     private int inputNum;
     private int minValue;
     private int maxValue;
@@ -23,7 +22,7 @@ public class Controller {
 
     public void process() {
         model.setGuess(rand(minValue, maxValue));
-        view.printMessage("" + model.getGuess());
+//        view.printMessage("" + model.getGuess()); //result
         guessNum();
     }
 
@@ -77,6 +76,7 @@ public class Controller {
      */
     private void getStats(){
         int index = 1;
+        int attempts = model.getAmmountAttempts();
         view.printMessage(view.ATTEMPTS_MESSAGE + attempts);
         for (Integer attempt : model.getAllAttempts()) {
             System.out.println("Attempt " + index + ", number " + attempt);
@@ -104,7 +104,6 @@ public class Controller {
         view.printMessage(view.START_MESSAGE);
         while (true) {
             while (checkNum(sc) && inputNum != model.getGuess()) {
-                attempts++;
                 if (inputNum == maxValue || inputNum == minValue) {
                     if (inputNum == maxValue) {
                         maxValue--;
@@ -135,7 +134,6 @@ public class Controller {
             outOfRange(inputNum);
             if (inputNum == model.getGuess()) {
                 model.addAttempt(inputNum);
-                attempts++;
                 view.printMessage(view.CONGRATULATION_MESSAGE);
                 getStats();
                 break;
