@@ -2,6 +2,9 @@ import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * Created by Mykyta Frolov
+ */
 public class Controller {
     private Model model;
     private View view;
@@ -24,11 +27,23 @@ public class Controller {
         guessNum();
     }
 
+    /**
+     * Sets randomly number from range
+     * @param min minimum range value
+     * @param max maximum range value
+     * @return random number
+     */
     private int rand(int min, int max) {
         Random rand = new Random();
         return (int) rand.nextInt((max - min) + 1) + min;
     }
 
+    /**
+     * Check input data
+     * @param sc object of Scanner
+     * @return true if it's int
+     * @return false if it's not int
+     */
     private boolean checkNum(Scanner sc) {
         try {
             inputNum = sc.nextInt();
@@ -38,6 +53,10 @@ public class Controller {
         return true;
     }
 
+    /**
+     * Help user to guess faster
+     * @param inputNum input number
+     */
     private void closeGuess(int inputNum) {
         if (Math.abs(inputNum - model.getGuess()) <= 10) {
             view.printMessage(view.CLOSE_NUMBER_MESSAGE);
@@ -53,6 +72,9 @@ public class Controller {
         model.addAttempt(inputNum);
     }
 
+    /**
+     * Get all attempts
+     */
     private void getStats(){
         int index = 1;
         view.printMessage(view.ATTEMPTS_MESSAGE + attempts);
@@ -62,6 +84,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Get current range
+     */
     private String getRange() {
         return "[" + minValue + "," + maxValue + "]";
     }
@@ -72,6 +97,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Asks the user for a number in the range until he/she win, changes range depending on input
+     */
     private void guessNum() {
         view.printMessage(view.START_MESSAGE);
         while (true) {

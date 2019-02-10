@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by Mykyta Frolov
+ */
 public class Model {
     private int minValue = 0;
     private int maxValue = 100;

@@ -1,3 +1,6 @@
+/**
+ * Created by Mykyta Frolov
+ */
 public class View {
     public final String START_MESSAGE = "Hello, you are playing the game, where you need to guess a random number in the range [0,100]";
     public final String ERROR_TYPE_MESSAGE = "Only integer is acceptable";
