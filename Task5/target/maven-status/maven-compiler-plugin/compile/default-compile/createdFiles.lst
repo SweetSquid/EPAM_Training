@@ -1,0 +1,8 @@
+ua\training\model\entity\Notebook.class
+ua\training\view\MessageConstants.class
+ua\training\controller\Form.class
+ua\training\model\entity\WrongEmailException.class
+ua\training\view\View.class
+ua\training\model\entity\WrongLoginException.class
+ua\training\controller\RegexContainer.class
+ua\training\model\entity\NotebookDB.class
