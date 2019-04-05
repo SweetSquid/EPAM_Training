@@ -74,7 +74,7 @@ public class JDBCUserFactory implements UserDao {
 
         String query = "SELECT * FROM users WHERE username = ?";
 
-        try(PreparedStatement ps = connection.prepareCall(query)) {
+        try (PreparedStatement ps = connection.prepareCall(query)) {
             ps.setString(1, login);
             ResultSet rs = ps.executeQuery();
             UserMapper userMapper = new UserMapper();

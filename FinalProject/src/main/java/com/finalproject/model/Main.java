@@ -1,11 +1,8 @@
 package com.finalproject.model;
 
-import com.finalproject.model.dao.DaoFactory;
-import com.finalproject.model.dao.UserDao;
-import com.finalproject.model.dao.mapper.UserMapper;
-import com.finalproject.model.entity.User;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class Main {
     private static final String URL = "jdbc:mysql://localhost:3306/finalproject?serverTimezone=UTC";
@@ -17,20 +14,9 @@ public class Main {
     private static ResultSet rs;
 
     public static void main(String[] args) {
-        try {
-            DaoFactory daoFactory = DaoFactory.getInstance();
-            UserDao dao = daoFactory.createUser();
-
-            con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            stmt = con.createStatement();
-            rs = stmt.executeQuery("SELECT * FROM users");
-            while (rs.next()) {
-                UserMapper userMapper = new UserMapper();
-                User user = userMapper.extractFromResultSet(rs);
-                System.out.println(user.toString());
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        String path = "/taxreturn/login";
+        StringBuilder a = new StringBuilder(path);
+        a.insert(0, "1");
+        System.out.println(a.toString());
     }
 }

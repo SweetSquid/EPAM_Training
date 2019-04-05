@@ -2,9 +2,6 @@ package com.finalproject.controller;
 
 
 import com.finalproject.controller.command.Command;
-import com.finalproject.controller.command.Home;
-import com.finalproject.controller.command.Login;
-import com.finalproject.controller.command.Registration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,10 +14,8 @@ import java.util.Map;
 public class Servlet extends HttpServlet {
     private Map<String, Command> commands = new HashMap<>();
 
-    public void init(){
-        commands.put("login", new Login());
-        commands.put("registration", new Registration());
-        commands.put("", new Home());
+    public void init() {
+
     }
 
     @Override
@@ -31,24 +26,33 @@ public class Servlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-     processRequest(request,response);
+        processRequest(request, response);
     }
 
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        String role = (String) request.getSession().getAttribute("role");
         String path = request.getRequestURI();
         System.out.println(path);
-        path = path.replaceAll(".*/taxreturn/" , "");
+        path = path.replaceAll(".*/taxreturn/", "");
+
+        String defaultPath;
+
+        commands = (Map<String, Command>) request.getSession().getAttribute("commands");
+
+
         System.out.println(path);
-        Command command = commands.getOrDefault(path ,
-                (r)->"/index.jsp");
+        Command command = commands.getOrDefault(path,
+                (r) -> "error");
         String page = command.execute(request);
-        if(page.contains("redirect")){
+        System.out.println(page + " page cont: " + request.getSession().getAttribute("commands") + " Role: " + role);
+
+        if (page.contains("redirect")) {
             response.sendRedirect(page.replace("redirect:", "/"));
-        }else {
+        } else {
             request.getRequestDispatcher(page).forward(request, response);
         }
+        request.getSession().getAttribute("role");
     }
 }

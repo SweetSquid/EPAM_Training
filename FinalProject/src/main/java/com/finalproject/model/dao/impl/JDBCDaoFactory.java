@@ -11,7 +11,7 @@ public class JDBCDaoFactory extends DaoFactory {
 
 
     public Connection getConnection() {
-        try{
+        try {
             return dataSource.getConnection();
         } catch (SQLException e) {
             throw new RuntimeException(e);

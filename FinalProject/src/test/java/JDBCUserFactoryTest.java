@@ -22,7 +22,7 @@ public class JDBCUserFactoryTest {
     }
 
     @Test
-    public void createTest(){
+    public void createTest() {
         DaoFactory daoFactory = DaoFactory.getInstance();
         UserDao dao = daoFactory.createUser();
         User user = new User();

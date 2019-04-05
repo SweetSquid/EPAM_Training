@@ -10,15 +10,16 @@ public class ConnectionPoolHolder {
     private static final String URL = "jdbc:mysql://localhost:3306/finalproject?serverTimezone=UTC";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
-
+    private static final String DRIVER_CLASS_NAME = "com.mysql.cj.jdbc.Driver";
     private static volatile DataSource dataSource;
-    public static DataSource getDataSource(){
 
-        if (dataSource == null){
+    public static DataSource getDataSource() {
+
+        if (dataSource == null) {
             synchronized (ConnectionPoolHolder.class) {
                 if (dataSource == null) {
                     BasicDataSource ds = new BasicDataSource();
-                    ds.setDriverClassName("com.mysql.jdbc.Driver");
+                    ds.setDriverClassName(DRIVER_CLASS_NAME);
                     ds.setUrl(URL);
                     ds.setUsername(USERNAME);
                     ds.setPassword(PASSWORD);

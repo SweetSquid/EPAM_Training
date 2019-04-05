@@ -50,7 +50,7 @@
 </section>
 
 
-<section class="call-to-action overly bg-3 section-sm">
+<section class=" overly bg-3 section-sm">
     <!-- Container Start -->
     <div class="container">
         <div class="row justify-content-md-center text-center">

@@ -33,6 +33,8 @@ public class Registration implements Command {
             user.setPassword(request.getParameter("password"));
             dao.create(user);
             dao.close();
+            new Login().execute(request);
+            return "redirect:taxreturn";
         }
         return "/registration.jsp";
     }
