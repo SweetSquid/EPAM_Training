@@ -22,9 +22,9 @@
         <div class="row">
             <div class="col-md-12">
                 <nav class="navbar navbar-expand-lg navbar-light navigation">
-                    <a class="navbar-brand" href="${pageContext.request.contextPath}/taxreturn">
+                    <a class="navbar-brand" href="${pageContext.request.contextPath}/taxreturn" style="width: 10%; height: 10%;">
                         <img src="${pageContext.request.contextPath}/images/index_pic.jpg"
-                             style="width: 10%; height: 10%;" alt="">
+                             style="width: 72.5%; height: 72.5%;" alt="">
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent"
@@ -32,9 +32,33 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto main-nav ">
+                            <li class="nav-item ">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/tax-return-list">Tax return list</a>
+                            </li>
+                            <li class="nav-item dropdown dropdown-slide">
+
+                            </li>
+                            <li class="nav-item dropdown dropdown-slide">
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Pages <span><i class="fa fa-angle-down"></i></span>
+                                </a>
+
+                            </li>
+                            <li class="nav-item dropdown dropdown-slide">
+                                <a class="nav-link dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Listing <span><i class="fa fa-angle-down"></i></span>
+                                </a>
+                                <!-- Dropdown list -->
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="category.html">Ad-Gird View</a>
+                                    <a class="dropdown-item" href="ad-listing-list.html">Ad-List View</a>
+                                </div>
+                            </li>
+                        </ul>
                         <ul class="navbar-nav ml-auto mt-10">
                             <li class="nav-item">
-                                <label class="nav-link " style="font-size: 30px">Hello, ${user_name}</label>
+                                <label class="nav-link " style="font-size: 30px">Hello, ${name}</label>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link login-button"
@@ -75,15 +99,14 @@
                         <script>
                             var CurrentYear = new Date().getFullYear()
                             document.write(CurrentYear)
-                        </script>
-                        . All Rights Reserved
+                        </script>. All Rights Reserved
                     </p>
                 </div>
             </div>
             <div class="col-sm-6 col-12">
                 <!-- Social Icons -->
                 <ul class="social-media-icons text-right">
-                    <li><a class="fa fa-facebook" href="#" target="_blank"></a></li>
+                    <li><a class="fa fa-github" href="https://github.com/SweetSquid" target="_blank"></a></li>
                     <li><a class="fa fa-instagram" href="https://www.instagram.com/sweet__squid/" target="_blank"></a>
                     </li>
                     <li><a class="fa fa-telegram" href="https://t.me/sweetsquid" target="_blank"></a></li>

@@ -10,9 +10,9 @@ public interface GenericDao<T> extends AutoCloseable {
 
     List<T> readAll();
 
-    void update(T t);
+    boolean update(T t, int id);
 
-    void delete(int id);
+    boolean delete(int id);
 
     void close();
 

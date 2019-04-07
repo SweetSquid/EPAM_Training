@@ -89,15 +89,14 @@
                         <script>
                             var CurrentYear = new Date().getFullYear()
                             document.write(CurrentYear)
-                        </script>
-                        . All Rights Reserved
+                        </script>. All Rights Reserved
                     </p>
                 </div>
             </div>
             <div class="col-sm-6 col-12">
                 <!-- Social Icons -->
                 <ul class="social-media-icons text-right">
-                    <li><a class="fa fa-facebook" href="#" target="_blank"></a></li>
+                    <li><a class="fa fa-github" href="https://github.com/SweetSquid" target="_blank"></a></li>
                     <li><a class="fa fa-instagram" href="https://www.instagram.com/sweet__squid/" target="_blank"></a>
                     </li>
                     <li><a class="fa fa-telegram" href="https://t.me/sweetsquid" target="_blank"></a></li>

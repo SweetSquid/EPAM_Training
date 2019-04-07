@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -74,7 +75,7 @@
     </div>
 </section>
 
-<section class="overly bg-3 section-sm">
+<section class="overly  section-sm">
     <!-- Container Start -->
     <div class="container">
         <div class="row justify-content-md-center text-center">
@@ -85,6 +86,27 @@
         </div>
     </div>
     <!-- Container End -->
+</section>
+
+<section class="login py-lg-5 border-top-1">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-lg-8 align-item-center">
+                <div class="border">
+                    <h3 class="bg-gray p-4 text-center">Logged users</h3>
+                    <form method="post" action="${pageContext.request.contextPath}/taxreturn/login">
+                        <fieldset class="p-4">
+                            <ul>
+                                <c:forEach items="${loggedUsers}" var="user">
+                                    <li><c:out value="${user}"/></li>
+                                </c:forEach>
+                            </ul>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -22,31 +23,36 @@
         <div class="row">
             <div class="col-md-12">
                 <nav class="navbar navbar-expand-lg navbar-light navigation">
-                    <a class="navbar-brand" href="${pageContext.request.contextPath}/taxreturn"  style="width: 10%; height: 10%;" >
+                    <a class="navbar-brand" href="${pageContext.request.contextPath}/taxreturn"
+                       style="width: 10%; height: 10%;">
                         <img src="${pageContext.request.contextPath}/images/index_pic.jpg"
                              style="width: 72.5%; height: 72.5%;" alt="">
                     </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent"
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto main-nav ">
-                            <li class="nav-item ">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/logged_users">Logged users</a>
+                            <li class="nav-item">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/tax-return-list">Tax
+                                    return list</a>
                             </li>
                             <li class="nav-item dropdown dropdown-slide">
 
                             </li>
                             <li class="nav-item dropdown dropdown-slide">
-                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
+                                   aria-expanded="false">
                                     Pages <span><i class="fa fa-angle-down"></i></span>
                                 </a>
 
                             </li>
                             <li class="nav-item dropdown dropdown-slide">
-                                <a class="nav-link dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true"
+                                   aria-expanded="false">
                                     Listing <span><i class="fa fa-angle-down"></i></span>
                                 </a>
                                 <!-- Dropdown list -->
@@ -59,7 +65,7 @@
                         <ul class="navbar-nav ml-auto mt-10">
                             <ul class="navbar-nav ml-auto mt-10">
                                 <li class="nav-item">
-                                    <label class="nav-link " style="font-size: 30px">Hello, admin</label>
+                                    <label class="nav-link " style="font-size: 30px">Hello, ${username}</label>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link login-button"
@@ -74,7 +80,7 @@
     </div>
 </section>
 
-<section class="overly bg-3 section-sm">
+<section class="overly  section-sm">
     <!-- Container Start -->
     <div class="container">
         <div class="row justify-content-md-center text-center">
@@ -86,8 +92,64 @@
     </div>
     <!-- Container End -->
 </section>
+<section class="dashboard section">
+    <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
+        <!-- Recently Favorited -->
+        <div class="widget dashboard-container my-adslist">
+            <h3 class="widget-header">User's tax returns</h3>
+            <table class="table table-responsive product-dashboard-table">
+                <thead>
+                <tr>
+                    <th>User</th>
+                    <th class="text-center">Category</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                </thead>
+                <c:forEach items="${taxReturnList}" var="taxReturn">
+                    <tbody>
+                    <tr>
 
 
+                        <td class="product-details">
+
+                            <span class="add-id"><strong>Username:</strong> <c:out
+                                    value="${taxReturn.getUserId()}"/></span>
+                            <span><strong>Posted on: </strong><time><c:out
+                                    value="${taxReturn.getDate()}"/></time> </span>
+
+
+                        </td>
+                        <td class="product-category"><span class="categories"><c:out
+                                value="${taxReturn.getCategory()}"/></span></td>
+                        <td class="action" data-title="Action">
+                            <div class="">
+                                <ul class="list-inline justify-content-center">
+                                    <li class="list-inline-item">
+                                        <a name="a" data-toggle="tooltip" data-placement="top" title="Approve"
+                                           class="view"
+                                           href="${pageContext.request.contextPath}/taxreturn/approve?id=${taxReturn.getId()}">
+                                            <i class="fa fa-check"></i>
+                                        </a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a class="edit" data-toggle="tooltip" data-placement="top" title="Edit"
+                                           href="${pageContext.request.contextPath}/taxreturn/edit?id=${taxReturn.getId()}">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </c:forEach>
+            </table>
+
+        </div>
+    </div>
+</section>
 <!-- Footer Bottom -->
 <footer class="footer-bottom">
     <!-- Container Start -->
@@ -100,7 +162,8 @@
                         <script>
                             var CurrentYear = new Date().getFullYear()
                             document.write(CurrentYear)
-                        </script>. All Rights Reserved
+                        </script>
+                        . All Rights Reserved
                     </p>
                 </div>
             </div>

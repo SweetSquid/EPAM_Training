@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +41,16 @@ public class JDBCUserFactory implements UserDao {
 
     @Override
     public User readId(int id) {
-        return null;
+       User user = new User();
+        try (PreparedStatement ps = connection.prepareCall("SELECT * FROM users WHERE role = 'INSPECTOR'")) {
+            ResultSet rs = ps.executeQuery();
+            UserMapper userMapper = new UserMapper();
+            user = userMapper.extractFromResultSet(rs);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
     @Override
@@ -49,13 +59,14 @@ public class JDBCUserFactory implements UserDao {
     }
 
     @Override
-    public void update(User user) {
-
+    public boolean update(User user, int id) {
+        return false;
     }
 
-    @Override
-    public void delete(int id) {
 
+    @Override
+    public boolean delete(int id) {
+        return false;
     }
 
     @Override
@@ -88,6 +99,23 @@ public class JDBCUserFactory implements UserDao {
         }
 
         return result;
+    }
+
+    @Override
+    public List<Integer> getInspectorIdList() {
+        List<Integer> inspectorList = new ArrayList<>();
+        try (PreparedStatement ps = connection.prepareCall("SELECT * FROM users WHERE role = 'INSPECTOR'")) {
+            ResultSet rs = ps.executeQuery();
+            UserMapper userMapper = new UserMapper();
+
+            while (rs.next()) {
+                inspectorList.add(userMapper.extractFromResultSet(rs).getId());
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return inspectorList;
     }
 
 

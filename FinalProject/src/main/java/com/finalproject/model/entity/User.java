@@ -3,12 +3,16 @@ package com.finalproject.model.entity;
 
 import com.finalproject.model.entity.enums.Role;
 
+import java.util.Objects;
+
 public class User {
+    //TODO применить билдер для создания объекта
     private int id;
     private Role role;
     private String name;
     private String username;
     private String email;
+    //TODO сохранять пароль Jbcrypt
     private String password;
 
     public int getId() {
@@ -69,5 +73,23 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id &&
+                role == user.role &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(username, user.username) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, role, name, username, email, password);
     }
 }

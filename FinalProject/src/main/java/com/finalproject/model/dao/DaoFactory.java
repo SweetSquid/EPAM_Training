@@ -1,7 +1,9 @@
 package com.finalproject.model.dao;
 
 
+import com.finalproject.model.dao.impl.JDBCActionReportFactory;
 import com.finalproject.model.dao.impl.JDBCDaoFactory;
+import com.finalproject.model.dao.impl.JDBCTaxReturnFactory;
 import com.finalproject.model.dao.impl.JDBCUserFactory;
 
 public abstract class DaoFactory {
@@ -22,4 +24,6 @@ public abstract class DaoFactory {
     }
 
     public abstract JDBCUserFactory createUser();
+    public abstract JDBCTaxReturnFactory createTaxReturn();
+    public abstract JDBCActionReportFactory createActionReport();
 }

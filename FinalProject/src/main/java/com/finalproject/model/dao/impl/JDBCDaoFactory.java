@@ -22,4 +22,14 @@ public class JDBCDaoFactory extends DaoFactory {
     public JDBCUserFactory createUser() {
         return new JDBCUserFactory(getConnection());
     }
+
+    @Override
+    public JDBCTaxReturnFactory createTaxReturn() {
+        return new JDBCTaxReturnFactory(getConnection());
+    }
+
+    @Override
+    public JDBCActionReportFactory createActionReport() {
+        return new JDBCActionReportFactory(getConnection());
+    }
 }

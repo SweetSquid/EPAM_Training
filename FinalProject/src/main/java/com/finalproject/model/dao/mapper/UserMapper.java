@@ -5,7 +5,6 @@ import com.finalproject.model.entity.enums.Role;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Map;
 
 public class UserMapper implements ObjectMapper<User> {
 
@@ -21,8 +20,5 @@ public class UserMapper implements ObjectMapper<User> {
         return user;
     }
 
-    @Override
-    public User makeUnique(Map<Integer, User> existing, User entity) {
-        return null;
-    }
+
 }

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -30,42 +31,25 @@
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto main-nav ">
                             <li class="nav-item ">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/logged_users">Logged users</a>
+                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/new-tax-return">New tax return</a>
                             </li>
-                            <li class="nav-item dropdown dropdown-slide">
 
+                            <li class="nav-item ">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/action-report-list">Action report list</a>
                             </li>
-                            <li class="nav-item dropdown dropdown-slide">
-                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Pages <span><i class="fa fa-angle-down"></i></span>
-                                </a>
 
-                            </li>
-                            <li class="nav-item dropdown dropdown-slide">
-                                <a class="nav-link dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Listing <span><i class="fa fa-angle-down"></i></span>
-                                </a>
-                                <!-- Dropdown list -->
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="category.html">Ad-Gird View</a>
-                                    <a class="dropdown-item" href="ad-listing-list.html">Ad-List View</a>
-                                </div>
-                            </li>
                         </ul>
                         <ul class="navbar-nav ml-auto mt-10">
-                            <ul class="navbar-nav ml-auto mt-10">
-                                <li class="nav-item">
-                                    <label class="nav-link " style="font-size: 30px">Hello, admin</label>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link login-button"
-                                       href="${pageContext.request.contextPath}/taxreturn/logout">Logout</a>
-                                </li>
-                            </ul>
+                            <li class="nav-item">
+                                <label class="nav-link " style="font-size: 30px">Hello, ${name}</label>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link login-button"
+                                   href="${pageContext.request.contextPath}/taxreturn/logout">Logout</a>
+                            </li>
                         </ul>
                     </div>
                 </nav>
@@ -74,7 +58,7 @@
     </div>
 </section>
 
-<section class="overly bg-3 section-sm">
+<section class="overly  section-sm">
     <!-- Container Start -->
     <div class="container">
         <div class="row justify-content-md-center text-center">
@@ -86,8 +70,38 @@
     </div>
     <!-- Container End -->
 </section>
+<section class="dashboard section">
+    <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
+        <!-- Recently Favorited -->
+        <div class="widget dashboard-container my-adslist">
+            <h3 class="widget-header">User's tax returns</h3>
+            <table class="table table-responsive product-dashboard-table">
+                <thead>
+                <tr>
+                    <th class="text-center">Action</th>
+                    <th class="text-center">Message</th>
+                    <th class="text-center">Date</th>
+                </tr>
+                </thead>
+                <c:forEach items="${userActionReportList}" var="actionReport">
+                    <tbody>
+                    <tr>
+                        <td><span class="categories"><c:out
+                                value="${actionReport.getAction()}"/></span></td>
+                        <td><span class="categories"><c:out
+                                value="${actionReport.getMessage()}"/></span></td>
+                        <td><span class="categories"><c:out
+                                value="${actionReport.getDate()}"/></span></td>
 
+                    </tr>
 
+                    </tbody>
+                </c:forEach>
+            </table>
+
+        </div>
+    </div>
+</section>
 <!-- Footer Bottom -->
 <footer class="footer-bottom">
     <!-- Container Start -->
@@ -100,7 +114,8 @@
                         <script>
                             var CurrentYear = new Date().getFullYear()
                             document.write(CurrentYear)
-                        </script>. All Rights Reserved
+                        </script>
+                        . All Rights Reserved
                     </p>
                 </div>
             </div>

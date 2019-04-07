@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,6 +34,7 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
                         <ul class="navbar-nav ml-auto mt-10">
                             <li class="nav-item">
                                 <a class="nav-link login-button" href="${pageContext.request.contextPath}/taxreturn/login">Login</a>
@@ -83,7 +85,7 @@
             <div class="col-sm-6 col-12">
                 <!-- Social Icons -->
                 <ul class="social-media-icons text-right">
-                    <li><a class="fa fa-facebook" href="#" target="_blank"></a></li>
+                    <li><a class="fa fa-github" href="https://github.com/SweetSquid" target="_blank"></a></li>
                     <li><a class="fa fa-instagram" href="https://www.instagram.com/sweet__squid/" target="_blank"></a>
                     </li>
                     <li><a class="fa fa-telegram" href="https://t.me/sweetsquid" target="_blank"></a></li>
