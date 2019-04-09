@@ -11,10 +11,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 public class JDBCActionReportFactory implements ActionReportDao {
     private Connection connection;
-
+    private final static Logger LOGGER = Logger.getLogger(JDBCActionReportFactory.class.getSimpleName());
     public JDBCActionReportFactory(Connection connection) {
         this.connection = connection;
     }
@@ -41,6 +42,7 @@ public class JDBCActionReportFactory implements ActionReportDao {
         return Optional.empty();
     }
 
+    //TODO в одной транзакции
     @Override
     public boolean create(ActionReport actionReport, int taxReturnId) {
         boolean result = false;
@@ -51,16 +53,17 @@ public class JDBCActionReportFactory implements ActionReportDao {
             preparedStatement.setObject(3, actionReport.getDate());
             result = preparedStatement.execute();
             // TODO сделать создание tax_return_has_return_id
-//            PreparedStatement ps = connection.prepareCall(ActionReportSQL.GET_ACTION_REPORT.QUERY);
-//            ps.setInt(1, taxReturnId);
-//            ResultSet rs = ps.executeQuery();
-//            ActionReportMapper actionReportMapper = new ActionReportMapper();
-//            ActionReport actionReport1 = actionReportMapper.extractFromResultSet(rs);
-//
-//            preparedStatement = connection.prepareStatement(ActionReportSQL.CREATE_LINK.QUERY);
-//            preparedStatement.setInt(1, taxReturnId);
-//            preparedStatement.setInt(2, actionReport1.getReport_id());
-//            result = preparedStatement.execute();
+            PreparedStatement ps = connection.prepareCall(ActionReportSQL.GET_LAST_ACTION_REPORT.QUERY);
+            ResultSet rs = ps.executeQuery();
+            ActionReportMapper actionReportMapper = new ActionReportMapper();
+            ActionReport actionReport1 = new ActionReport();
+            if (rs.next()) {
+                actionReport1 = actionReportMapper.extractFromResultSet(rs);
+            }
+            preparedStatement = connection.prepareStatement(ActionReportSQL.CREATE_LINK.QUERY);
+            preparedStatement.setInt(1, taxReturnId);
+            preparedStatement.setInt(2, actionReport1.getReport_id());
+            result = preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -102,22 +105,43 @@ public class JDBCActionReportFactory implements ActionReportDao {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int reportId) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(ActionReportSQL.DELETE_LINK.QUERY);
+            statement.setInt(1, reportId);
+            statement.executeUpdate();
+            statement = connection.prepareStatement(ActionReportSQL.DELETE_REPORT.QUERY);
+            statement.setInt(1, reportId);
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
         return false;
     }
 
     @Override
     public void close() {
-
+        try {
+            connection.close();
+            LOGGER.info("connection was closed");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     enum ActionReportSQL {
-        CREATE_ACTION_REPORT("INSERT INTO action_report (report_id, action, message, date) VALUES (DEFAULT, (?), (?), (?))"),
+        CREATE_ACTION_REPORT("INSERT INTO action_report (report_id, action, message, date) VALUES (DEFAULT, ?, ?, ?)"),
+        CREATE_LINK("INSERT INTO tax_return_has_action_report (tax_return_tax_return_id, action_report_report_id) VALUES (?, ?)"),
         READ_ACTION_REPORT_LIST_BY_USER("SELECT a.report_id, a.action, a.message, a.date\n"+
                                                 "FROM action_report a\n"+
                                                 "       left join tax_return_has_action_report b ON a.report_id = b.action_report_report_id\n"+
                                                 "       left join tax_return c on c.tax_return_id = b.tax_return_tax_return_id\n"+
-                                                "WHERE c.user_id = (?)\n");
+                                                "WHERE c.user_id = ?\n"),
+        GET_LAST_ACTION_REPORT("SELECT MAX(report_id) as report_id, action, message, date FROM action_report"),
+        DELETE_REPORT("DELETE FROM action_report WHERE report_id = ?"),
+        DELETE_LINK("DELETE FROM tax_return_has_action_report WHERE action_report_report_id = ?"),;
         String QUERY;
 
         ActionReportSQL(String QUERY) {

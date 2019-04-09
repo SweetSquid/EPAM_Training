@@ -1,6 +1,5 @@
 package com.finalproject.model.dao.impl;
 
-import com.finalproject.model.dao.DaoFactory;
 import com.finalproject.model.dao.TaxReturnDao;
 import com.finalproject.model.dao.mapper.TaxReturnMapper;
 import com.finalproject.model.entity.TaxReturn;
@@ -12,12 +11,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 public class JDBCTaxReturnFactory implements TaxReturnDao {
-
+    private final static Logger LOGGER = Logger.getLogger(JDBCTaxReturnFactory.class.getSimpleName());
     private Connection connection;
 
     public JDBCTaxReturnFactory(Connection connection) {
+        System.out.println("Зашло в конструктор");
         this.connection = connection;
     }
 
@@ -61,7 +62,10 @@ public class JDBCTaxReturnFactory implements TaxReturnDao {
             TaxReturnMapper taxReturnMapper = new TaxReturnMapper();
 
             while (rs.next()) {
-                taxReturnList.add(taxReturnMapper.extractFromResultSet(rs));
+                TaxReturn taxReturn = taxReturnMapper.extractFromResultSet(rs);
+                if (!taxReturnHasReport(taxReturn.getId())) {
+                    taxReturnList.add(taxReturn);
+                }
             }
 
         } catch (SQLException e) {
@@ -92,8 +96,39 @@ public class JDBCTaxReturnFactory implements TaxReturnDao {
     }
 
     @Override
+    public TaxReturn getTaxReturnByActionId(int actionReportId) {
+        TaxReturn taxReturn = new TaxReturn();
+        try (PreparedStatement ps = connection.prepareCall(TaxReturnSQL.GET_TAX_BY_ACTION_ID.QUERY)) {
+            ps.setInt(1, actionReportId);
+            ResultSet rs = ps.executeQuery();
+            TaxReturnMapper taxReturnMapper = new TaxReturnMapper();
+
+            if (rs.next()) {
+                taxReturn = (taxReturnMapper.extractFromResultSet(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return taxReturn;
+    }
+
+    @Override
+    public boolean taxReturnHasReport(int taxReturnId) {
+        try (PreparedStatement ps = connection.prepareCall(TaxReturnSQL.TAX_HAS_REPORT.QUERY)) {
+            ps.setInt(1, taxReturnId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
     public boolean create(TaxReturn taxReturn) {
-        JDBCUserFactory dao = DaoFactory.getInstance().createUser();
         boolean result = false;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(TaxReturnSQL.CREATE.QUERY);
@@ -143,19 +178,29 @@ public class JDBCTaxReturnFactory implements TaxReturnDao {
     public void close() {
         try {
             connection.close();
+
+            LOGGER.info("connection was closed");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     enum TaxReturnSQL {
-        READ("SELECT login, name FROM users WHERE login = (?)"),
-        DELETE("DELETE FROM users WHERE login = (?)"),
-        CREATE("INSERT INTO tax_return (tax_return_id, user_id, inspector_id, category_id, date) VALUES (DEFAULT, (?), (?), (?), (?))"),
-        UPDATE("UPDATE tax_return SET category_id = (?), date = (?) WHERE tax_return_id= (?)"),
-        CHANGE_INSPECTOR("UPDATE tax_return SET inspector_id = (?) WHERE user_id = (?)"),
-        GET_ALL_USER_TAXRETURN("SELECT * FROM tax_return WHERE user_id = (?)"),
-        GET_ALL_INSPECTOR_TAXRETURN("SELECT * FROM tax_return WHERE inspector_id =(?)");
+        CREATE("INSERT INTO tax_return (tax_return_id, user_id, inspector_id, category_id, date) VALUES (DEFAULT, ?, ?, ?, ?)"),
+        UPDATE("UPDATE tax_return SET category_id = ?, date = ? WHERE tax_return_id= ?"),
+        CHANGE_INSPECTOR("UPDATE tax_return SET inspector_id = ? WHERE user_id = ?"),
+        GET_ALL_USER_TAXRETURN("SELECT * FROM tax_return WHERE user_id = ?"),
+        GET_TAX_BY_ACTION_ID("SELECT a.tax_return_id, a.user_id, a.inspector_id, a.category_id, a.date\n" +
+                "FROM tax_return a\n" +
+                "            left join tax_return_has_action_report b ON a.tax_return_id = b.tax_return_tax_return_id\n" +
+                "            left join action_report c on c.report_id = b.action_report_report_id\n" +
+                "WHERE c.report_id = ? AND action = 'EDIT'\n"),
+        TAX_HAS_REPORT("SELECT a.tax_return_id, a.user_id, a.inspector_id, a.category_id, a.date\n" +
+                "FROM tax_return a\n" +
+                "            right join tax_return_has_action_report b ON a.tax_return_id = b.tax_return_tax_return_id\n" +
+                "            right join action_report c on c.report_id = b.action_report_report_id\n" +
+                "WHERE a.tax_return_id = ?"),
+        GET_ALL_INSPECTOR_TAXRETURN("SELECT * FROM tax_return WHERE inspector_id = ?");
 
         String QUERY;
 

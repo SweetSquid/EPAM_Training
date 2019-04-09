@@ -13,10 +13,12 @@ public class UserActionReport implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         int userId = (int) request.getSession().getAttribute("userId");
-        JDBCActionReportFactory actionReportFactory = DaoFactory.getInstance().createActionReport();
-        List<ActionReport> actionReportList = actionReportFactory.userList(userId);
-        System.out.println(Arrays.toString(actionReportList.toArray()));
-        request.getSession().setAttribute("userActionReportList",actionReportList);
+
+            JDBCActionReportFactory actionReportFactory = DaoFactory.getInstance().createActionReport();
+            List<ActionReport> actionReportList = actionReportFactory.userList(userId);
+            System.out.println(Arrays.toString(actionReportList.toArray()));
+            request.getSession().setAttribute("userActionReportList", actionReportList);
+            actionReportFactory.close();
         return "/WEB-INF/user/user-action-report.jsp";
     }
 }

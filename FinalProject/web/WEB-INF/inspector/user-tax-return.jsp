@@ -40,27 +40,7 @@
                                 <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/tax-return-list">Tax
                                     return list</a>
                             </li>
-                            <li class="nav-item dropdown dropdown-slide">
 
-                            </li>
-                            <li class="nav-item dropdown dropdown-slide">
-                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
-                                   aria-expanded="false">
-                                    Pages <span><i class="fa fa-angle-down"></i></span>
-                                </a>
-
-                            </li>
-                            <li class="nav-item dropdown dropdown-slide">
-                                <a class="nav-link dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true"
-                                   aria-expanded="false">
-                                    Listing <span><i class="fa fa-angle-down"></i></span>
-                                </a>
-                                <!-- Dropdown list -->
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="category.html">Ad-Gird View</a>
-                                    <a class="dropdown-item" href="ad-listing-list.html">Ad-List View</a>
-                                </div>
-                            </li>
                         </ul>
                         <ul class="navbar-nav ml-auto mt-10">
                             <ul class="navbar-nav ml-auto mt-10">
@@ -96,7 +76,7 @@
     <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
         <!-- Recently Favorited -->
         <div class="widget dashboard-container my-adslist">
-            <h3 class="widget-header">User's tax returns</h3>
+            <h3 class="widget-header">Tax returns</h3>
             <table class="table table-responsive product-dashboard-table">
                 <thead>
                 <tr>
@@ -108,16 +88,11 @@
                 <c:forEach items="${taxReturnList}" var="taxReturn">
                     <tbody>
                     <tr>
-
-
                         <td class="product-details">
-
                             <span class="add-id"><strong>Username:</strong> <c:out
                                     value="${taxReturn.getUserId()}"/></span>
                             <span><strong>Posted on: </strong><time><c:out
                                     value="${taxReturn.getDate()}"/></time> </span>
-
-
                         </td>
                         <td class="product-category"><span class="categories"><c:out
                                 value="${taxReturn.getCategory()}"/></span></td>

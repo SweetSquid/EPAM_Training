@@ -2213,3 +2213,6 @@ form textarea {
 .form-dark .form-control, .form-dark .form-control:focus {
     color: #fff;
 }
+.col1 {
+    word-break:break-all;
+}

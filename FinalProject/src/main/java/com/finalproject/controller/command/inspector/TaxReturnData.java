@@ -17,6 +17,8 @@ public class TaxReturnData implements Command {
             JDBCTaxReturnFactory dao = DaoFactory.getInstance().createTaxReturn();
             List<TaxReturn> taxReturnList = dao.getInspectorTaxReturn(inspectorId);
             request.getSession().setAttribute("taxReturnList", taxReturnList);
+            dao.close();
+            //TODO у меня хранятся данные через сессию, сделать как-то на всех
         }
         //TODO добавить логин пользователя в отчёт
         return "/WEB-INF/inspector/user-tax-return.jsp";

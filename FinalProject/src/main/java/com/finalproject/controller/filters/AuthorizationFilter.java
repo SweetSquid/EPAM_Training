@@ -29,7 +29,7 @@ public class AuthorizationFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String role = (String) request.getSession().getAttribute("role");
         commands.clear();
-
+        //TODO guest == null
         if (role == null) {
             commands.put("login", new Login());
             commands.put("registration", new Registration());
@@ -44,6 +44,7 @@ public class AuthorizationFilter implements Filter {
             commands.put("/taxreturn", new com.finalproject.controller.command.user.Home());
             commands.put("new-tax-return", new com.finalproject.controller.command.user.NewTaxReturn());
             commands.put("action-report-list", new com.finalproject.controller.command.user.UserActionReport());
+            commands.put("action-report-list/edit", new com.finalproject.controller.command.user.Edit());
             commands.put("logout", new Logout());
         }
         if (role != null && role.equals(Role.INSPECTOR.toString())) {

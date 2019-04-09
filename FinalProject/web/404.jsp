@@ -50,8 +50,7 @@
                         <script>
                             var CurrentYear = new Date().getFullYear()
                             document.write(CurrentYear)
-                        </script>
-                        . All Rights Reserved
+                        </script>. All Rights Reserved
                     </p>
                 </div>
             </div>

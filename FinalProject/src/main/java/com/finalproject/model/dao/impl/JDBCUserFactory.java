@@ -11,9 +11,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 public class JDBCUserFactory implements UserDao {
-
+    private final static Logger LOGGER = Logger.getLogger(JDBCUserFactory.class.getSimpleName());
     private Connection connection;
 
     public JDBCUserFactory(Connection connection) {
@@ -73,6 +74,7 @@ public class JDBCUserFactory implements UserDao {
     public void close() {
         try {
             connection.close();
+            LOGGER.info("connection was closed");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -120,10 +122,10 @@ public class JDBCUserFactory implements UserDao {
 
 
     enum NotebookSQL {
-        READ("SELECT login, name FROM users WHERE login = (?)"),
-        DELETE("DELETE FROM users WHERE login = (?)"),
-        ADD("INSERT INTO users (id, role, name, username, email, password) VALUES (DEFAULT, (?), (?), (?), (?), (?))"),
-        UPDATE("UPDATE users SET login = (?), name = (?) WHERE login = (?)"),
+        READ("SELECT login, name FROM users WHERE login = ?"),
+        DELETE("DELETE FROM users WHERE login = ?"),
+        ADD("INSERT INTO users (id, role, name, username, email, password) VALUES (DEFAULT, ?, ?, ?, ?, ?)"),
+        UPDATE("UPDATE users SET login = ?, name = ? WHERE login = ?"),
         GET_ALL("SELECT name, login FROM users");
 
         String QUERY;

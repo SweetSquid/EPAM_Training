@@ -1,5 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,32 +18,28 @@
 </head>
 <body class="body-wrapper">
 
+
 <section>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <nav class="navbar navbar-expand-lg navbar-light navigation">
-                    <a class="navbar-brand" href="${pageContext.request.contextPath}/taxreturn"
-                       style="width: 10%; height: 10%;">
+                    <a class="navbar-brand" href="${pageContext.request.contextPath}/taxreturn"  style="width: 10%; height: 10%;" >
                         <img src="${pageContext.request.contextPath}/images/index_pic.jpg"
                              style="width: 72.5%; height: 72.5%;" alt="">
                     </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent"
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto main-nav ">
                             <li class="nav-item ">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/new-tax-return">New
-                                    tax return</a>
+                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/new-tax-return">New tax return</a>
                             </li>
 
                             <li class="nav-item ">
-                                <a class="nav-link"
-                                   href="${pageContext.request.contextPath}/taxreturn/action-report-list">Action report
-                                    list</a>
+                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/action-report-list">Action report list</a>
                             </li>
 
                         </ul>
@@ -63,56 +59,42 @@
     </div>
 </section>
 
-<section class="overly  section-sm">
-    <!-- Container Start -->
+<section class="login py-5 border-top-1">
     <div class="container">
-        <div class="row justify-content-md-center text-center">
-            <div class="col-md-8">
-                <div style="size: auto; color: #07ad76">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-8 align-item-center">
+                <div class="border border">
+                    <h3 class="bg-gray p-4">Edit tax return</h3>
+                    <form method="post" action="${pageContext.request.contextPath}/taxreturn/action-report-list/edit">
+                        <fieldset class="p-4">
+
+                            <select name="taxType" class="w-100 form-control mt-lg-2 mt-md-2 border"
+                                    style=" color: #666666; font-size: 14px; font-weight: 400; font-family: sans-serif">
+                                <option>Тип налога</option>
+                                <c:forEach items="${taxList}" var="tax">
+                                    <option><c:out value="${tax}"/></option>
+                                </c:forEach>
+                            </select>
+
+                            <textarea  class="border p-3 w-100 my-3 " id="textarea" v-model="text" placeholder="Enter something..." maxlength="800" style="resize: none">
+
+                            </textarea>
+
+                            <div class="loggedin-forgot d-inline-flex my-1">
+                                <button type="submit"
+                                        class="d-block py-3 px-4 bg-primary text-white border-0 rounded font-weight-bold">
+                                    Send tax return
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Container End -->
 </section>
-<section class="dashboard section">
-    <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0 w-100">
-        <!-- Recently Favorited -->
-        <div class="widget dashboard-container my-adslist">
-            <h3 class="widget-header">User's tax returns</h3>
-            <table class="table table-responsive product-dashboard-table text-center">
-                <thead >
-                <tr>
-                    <th class="text-center w-25">Action</th>
-                    <th class="text-center w-25">Message</th>
-                    <th class="text-center w-25">Date</th>
-                    <th class="text-center w-25">Edit</th>
-                </tr>
-                </thead>
-                <c:forEach items="${userActionReportList}" var="actionReport">
-                    <tbody>
-                    <tr>
-                        <td><span class="categories w-25 col1"><c:out
-                                value="${actionReport.getAction()}"/></span></td>
-                        <td><span class="categories w-25 col1"><c:out
-                                value="${actionReport.getMessage()}"/></span></td>
-                        <td><span class="categories w-25 col1"><c:out
-                                value="${actionReport.getDate()}"/></span></td>
-                        <c:if test="${actionReport.getAction() eq 'EDIT'}">
-                            <td>
-                                <span class="categories w-25 col1">
-                                    <a class="nav-link nav-item" href="${pageContext.request.contextPath}/taxreturn/action-report-list/edit?editActionId=${actionReport.getReport_id()}">Edit</a>
-                                </span>
-                            </td>
-                        </c:if>
-                    </tr>
-                    </tbody>
-                </c:forEach>
-            </table>
 
-        </div>
-    </div>
-</section>
+
 <!-- Footer Bottom -->
 <footer class="footer-bottom">
     <!-- Container Start -->
@@ -147,6 +129,8 @@
 </footer>
 </body>
 </html>
+
+
 
 
 

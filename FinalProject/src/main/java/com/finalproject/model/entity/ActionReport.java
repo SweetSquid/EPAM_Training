@@ -68,6 +68,6 @@ public class ActionReport {
     }
 
     public enum Action {
-        APPROVED, REJECTED
+        APPROVED, EDIT
     }
 }

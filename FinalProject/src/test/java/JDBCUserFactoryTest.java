@@ -1,16 +1,16 @@
 import com.finalproject.model.dao.DaoFactory;
-import com.finalproject.model.dao.TaxReturnDao;
-import com.finalproject.model.dao.UserDao;
+import com.finalproject.model.dao.impl.JDBCActionReportFactory;
 import com.finalproject.model.dao.impl.JDBCDaoFactory;
+import com.finalproject.model.dao.impl.JDBCTaxReturnFactory;
 import com.finalproject.model.dao.impl.JDBCUserFactory;
-import com.finalproject.model.entity.TaxReturn;
+import com.finalproject.model.entity.ActionReport;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.sql.Connection;
 import java.time.LocalDateTime;
-import java.util.Arrays;
+
+import static org.junit.Assert.assertTrue;
 
 public class JDBCUserFactoryTest {
     private JDBCDaoFactory jdbcDaoFactory;
@@ -22,23 +22,26 @@ public class JDBCUserFactoryTest {
         daoFactory = DaoFactory.getInstance();
     }
 
-    @Ignore
+
     @Test
     public void udpateTest() {
-        TaxReturnDao dao = daoFactory.createTaxReturn();
-        TaxReturn taxReturn = new TaxReturn();
-        taxReturn.setUserId(4);
-        taxReturn.setInspectorId(8);
-        taxReturn.setCategory(TaxReturn.Category.LAND_TAX);
-        taxReturn.setDate(LocalDateTime.now());
-        dao.create(taxReturn);
+        JDBCTaxReturnFactory dao = daoFactory.createTaxReturn();
+        assertTrue(dao.taxReturnHasReport(21));
     }
 
 
     @Test
     public void changeInspectorTest(){
-        UserDao userDao = daoFactory.createUser();
-        System.out.println(Arrays.toString(userDao.getInspectorIdList().toArray()));
+        JDBCActionReportFactory dao = daoFactory.createActionReport();
+        ActionReport actionReport = new ActionReport();
+        actionReport.setAction(ActionReport.Action.APPROVED);
+        actionReport.setDate(LocalDateTime.now());
+        dao.create(actionReport,4);
+        dao.create(actionReport,5);
+        dao.create(actionReport,17);
+        dao.create(actionReport,18);
+        dao.create(actionReport,19);
+        dao.create(actionReport,20);
     }
 
 

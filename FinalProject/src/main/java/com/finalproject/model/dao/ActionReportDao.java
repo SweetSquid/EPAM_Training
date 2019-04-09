@@ -5,7 +5,7 @@ import com.finalproject.model.entity.ActionReport;
 import java.util.List;
 import java.util.Optional;
 
-public interface ActionReportDao{
+public interface ActionReportDao extends AutoCloseable{
     // TODO добавить расширение интерфейса GenericDao
     Optional<ActionReport> findById(int id);
     boolean create(ActionReport entity, int taxReturnId);

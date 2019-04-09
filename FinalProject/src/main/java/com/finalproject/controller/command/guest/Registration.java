@@ -11,9 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 public class Registration implements Command {
     @Override
     public String execute(HttpServletRequest request) {
-
-        DaoFactory daoFactory = DaoFactory.getInstance();
-        UserDao dao = daoFactory.createUser();
         String name = request.getParameter("name");
         String username = request.getParameter("username");
         String email = request.getParameter("email");
@@ -21,6 +18,8 @@ public class Registration implements Command {
 
         if (name != null && username != null
                 && email != null && password != null) {
+            DaoFactory daoFactory = DaoFactory.getInstance();
+            UserDao dao = daoFactory.createUser();
             User user = new User();
             user.setRole(Role.USER);
             user.setName("name");

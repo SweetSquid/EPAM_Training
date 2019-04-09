@@ -18,7 +18,7 @@
 
 </head>
 <body class="body-wrapper">
-
+<%--//TODO jsp:include для footer--%>
 <section>
     <div class="container">
         <div class="row">

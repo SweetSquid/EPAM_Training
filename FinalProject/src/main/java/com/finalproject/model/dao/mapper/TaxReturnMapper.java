@@ -4,7 +4,7 @@ import com.finalproject.model.entity.TaxReturn;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.ZoneOffset;
+import java.sql.Timestamp;
 
 public class TaxReturnMapper implements ObjectMapper<TaxReturn> {
 
@@ -15,8 +15,9 @@ public class TaxReturnMapper implements ObjectMapper<TaxReturn> {
         taxReturn.setUserId(rs.getInt("user_id"));
         taxReturn.setInspectorId(rs.getInt("inspector_id"));
         taxReturn.setCategory(TaxReturn.Category.valueOf(rs.getString("category_id")));
-        //TODO убрать потерю часов, минут и секунд
-        taxReturn.setDate(rs.getDate("date").toLocalDate().atStartOfDay(ZoneOffset.UTC).toLocalDateTime());
+        Timestamp date = (Timestamp) rs.getObject("date");
+        //TODO убрать t из вывода
+        taxReturn.setDate(date.toLocalDateTime());
         return taxReturn;
        
     }
