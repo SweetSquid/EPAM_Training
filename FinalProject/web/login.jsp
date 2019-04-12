@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +12,10 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/webjars/jquery/3.0.0/jquery.js"></script>
+
+
+    <script></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
@@ -68,6 +73,12 @@
                             </button>
                             <a class="mt-3 d-inline-block text-primary"
                                href="${pageContext.request.contextPath}/taxreturn/registration">Register Now</a>
+                            <c:if test="${wrongLogin eq 'false'}">
+                            <div class="alert alert-danger" script>
+                                <strong>Error!</strong> Wrong username or password
+                            </div>
+                                <c:remove var="wrongLogin"/>
+                            </c:if>
                         </fieldset>
                     </form>
                 </div>
@@ -105,3 +116,11 @@
 </footer>
 </body>
 </html>
+
+<script>
+    window.setTimeout(function() {
+        $(".alert").fadeTo(500, 0).slideUp(500, function(){
+            $(this).remove();
+        });
+    }, 2000);
+</script>

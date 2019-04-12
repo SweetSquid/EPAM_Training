@@ -1,27 +1,21 @@
 package com.finalproject.model.dao.impl;
 
 import com.finalproject.model.dao.TaxReturnDao;
-import com.finalproject.model.dao.mapper.TaxReturnMapper;
 import com.finalproject.model.entity.TaxReturn;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 public class JDBCTaxReturnFactory implements TaxReturnDao {
-    private final static Logger LOGGER = Logger.getLogger(JDBCTaxReturnFactory.class.getSimpleName());
     private Connection connection;
 
-    public JDBCTaxReturnFactory(Connection connection) {
-        System.out.println("Зашло в конструктор");
+    JDBCTaxReturnFactory(Connection connection) {
         this.connection = connection;
     }
 
+    //TODO check CHANGE_INSPECTOR query
     @Override
     public boolean changeInspector(int inspectorId, int userId) {
         try (PreparedStatement ps = connection.prepareCall(TaxReturnSQL.CHANGE_INSPECTOR.QUERY)) {
@@ -37,16 +31,12 @@ public class JDBCTaxReturnFactory implements TaxReturnDao {
     @Override
     public List<TaxReturn> getUserTaxReturn(int userId) {
         List<TaxReturn> taxReturnList = new ArrayList<>();
-
         try (PreparedStatement ps = connection.prepareCall(TaxReturnSQL.GET_ALL_USER_TAXRETURN.QUERY)) {
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
-            TaxReturnMapper taxReturnMapper = new TaxReturnMapper();
-
             while (rs.next()) {
-                taxReturnList.add(taxReturnMapper.extractFromResultSet(rs));
+                taxReturnList.add(extractFromResultSet(rs));
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -59,10 +49,8 @@ public class JDBCTaxReturnFactory implements TaxReturnDao {
         try (PreparedStatement ps = connection.prepareCall(TaxReturnSQL.GET_ALL_INSPECTOR_TAXRETURN.QUERY)) {
             ps.setInt(1, inspectorId);
             ResultSet rs = ps.executeQuery();
-            TaxReturnMapper taxReturnMapper = new TaxReturnMapper();
-
             while (rs.next()) {
-                TaxReturn taxReturn = taxReturnMapper.extractFromResultSet(rs);
+                TaxReturn taxReturn = extractFromResultSet(rs);
                 if (!taxReturnHasReport(taxReturn.getId())) {
                     taxReturnList.add(taxReturn);
                 }
@@ -83,12 +71,10 @@ public class JDBCTaxReturnFactory implements TaxReturnDao {
         try (PreparedStatement ps = connection.prepareCall(query)) {
             ps.setInt(1, taxReturnId);
             ResultSet rs = ps.executeQuery();
-            TaxReturnMapper taxReturnMapper = new TaxReturnMapper();
-            //TODO если надо выводить пару значений, поменять if на while
+            //если надо выводить пару значений, поменять if на while
             if (rs.next()) {
-                taxReturn = Optional.of(taxReturnMapper.extractFromResultSet(rs));
+                taxReturn = Optional.of(extractFromResultSet(rs));
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -97,16 +83,13 @@ public class JDBCTaxReturnFactory implements TaxReturnDao {
 
     @Override
     public TaxReturn getTaxReturnByActionId(int actionReportId) {
-        TaxReturn taxReturn = new TaxReturn();
+       TaxReturn taxReturn = new TaxReturn();
         try (PreparedStatement ps = connection.prepareCall(TaxReturnSQL.GET_TAX_BY_ACTION_ID.QUERY)) {
             ps.setInt(1, actionReportId);
             ResultSet rs = ps.executeQuery();
-            TaxReturnMapper taxReturnMapper = new TaxReturnMapper();
-
             if (rs.next()) {
-                taxReturn = (taxReturnMapper.extractFromResultSet(rs));
+                taxReturn = extractFromResultSet(rs);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -134,13 +117,33 @@ public class JDBCTaxReturnFactory implements TaxReturnDao {
             PreparedStatement preparedStatement = connection.prepareStatement(TaxReturnSQL.CREATE.QUERY);
             preparedStatement.setInt(1, taxReturn.getUserId());
             preparedStatement.setInt(2, taxReturn.getInspectorId());
-            preparedStatement.setString(3, taxReturn.getCategory().toString());
+            preparedStatement.setString(3, taxReturn.getCategory());
             preparedStatement.setObject(4, taxReturn.getDate());
+            preparedStatement.setDouble(5, taxReturn.getWage());
+            preparedStatement.setDouble(6, taxReturn.getMilitaryCollection());
+            preparedStatement.setDouble(7, taxReturn.getIncomeTax());
             result = preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return result;
+    }
+
+    @Override
+    public TaxReturn extractFromResultSet(ResultSet rs) throws SQLException {
+        TaxReturn taxReturn = new TaxReturn();
+        taxReturn.setId(rs.getInt("tax_return_id"));
+        taxReturn.setUserId(rs.getInt("user_id"));
+        taxReturn.setInspectorId(rs.getInt("inspector_id"));
+        taxReturn.setCategory(rs.getString("category_id"));
+        taxReturn.setWage(rs.getDouble("wage"));
+        taxReturn.setMilitaryCollection(rs.getDouble("military_collection"));
+        taxReturn.setIncomeTax(rs.getDouble("income_tax"));
+        Timestamp date = (Timestamp) rs.getObject("date");
+        //TODO убрать t из вывода
+        taxReturn.setDate(date.toLocalDateTime());
+        return taxReturn;
+
     }
 
     @Override
@@ -158,7 +161,7 @@ public class JDBCTaxReturnFactory implements TaxReturnDao {
     public boolean update(TaxReturn taxReturn, int taxReturnId) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(TaxReturnSQL.UPDATE.QUERY);
-            preparedStatement.setString(1, taxReturn.getCategory().toString());
+            preparedStatement.setString(1, taxReturn.getCategory());
             preparedStatement.setObject(2, taxReturn.getDate());
             preparedStatement.setInt(3, taxReturnId);
             preparedStatement.executeUpdate();
@@ -178,33 +181,37 @@ public class JDBCTaxReturnFactory implements TaxReturnDao {
     public void close() {
         try {
             connection.close();
-
-            LOGGER.info("connection was closed");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
+    public Integer getInspectorId(int userId){
+        try (PreparedStatement ps = connection.prepareCall(TaxReturnSQL.GET_INSPECTOR_ID.QUERY)) {
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return extractFromResultSet(rs).getInspectorId();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     enum TaxReturnSQL {
-        CREATE("INSERT INTO tax_return (tax_return_id, user_id, inspector_id, category_id, date) VALUES (DEFAULT, ?, ?, ?, ?)"),
+        CREATE("INSERT INTO tax_return (tax_return_id, user_id, inspector_id, category_id, date, wage, military_collection, income_tax) VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?)"),
         UPDATE("UPDATE tax_return SET category_id = ?, date = ? WHERE tax_return_id= ?"),
         CHANGE_INSPECTOR("UPDATE tax_return SET inspector_id = ? WHERE user_id = ?"),
         GET_ALL_USER_TAXRETURN("SELECT * FROM tax_return WHERE user_id = ?"),
-        GET_TAX_BY_ACTION_ID("SELECT a.tax_return_id, a.user_id, a.inspector_id, a.category_id, a.date\n" +
-                "FROM tax_return a\n" +
-                "            left join tax_return_has_action_report b ON a.tax_return_id = b.tax_return_tax_return_id\n" +
-                "            left join action_report c on c.report_id = b.action_report_report_id\n" +
-                "WHERE c.report_id = ? AND action = 'EDIT'\n"),
-        TAX_HAS_REPORT("SELECT a.tax_return_id, a.user_id, a.inspector_id, a.category_id, a.date\n" +
-                "FROM tax_return a\n" +
-                "            right join tax_return_has_action_report b ON a.tax_return_id = b.tax_return_tax_return_id\n" +
-                "            right join action_report c on c.report_id = b.action_report_report_id\n" +
-                "WHERE a.tax_return_id = ?"),
+        GET_TAX_BY_ACTION_ID("SELECT a.* FROM tax_return a LEFT JOIN action_report b ON a.tax_return_id = b.tax_return_id WHERE b.report_id = ? AND action = 'EDIT'"),
+        TAX_HAS_REPORT("SELECT * FROM action_report WHERE tax_return_id = ?"),
+        GET_INSPECTOR_ID("SELECT * FROM tax_return WHERE user_id = ?"),
         GET_ALL_INSPECTOR_TAXRETURN("SELECT * FROM tax_return WHERE inspector_id = ?");
 
         String QUERY;
 
-        TaxReturnSQL(String QUERY) {
+         TaxReturnSQL(String QUERY) {
             this.QUERY = QUERY;
         }
     }

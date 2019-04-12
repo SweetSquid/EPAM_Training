@@ -43,7 +43,7 @@
                         </ul>
                         <ul class="navbar-nav ml-auto mt-10">
                             <li class="nav-item">
-                                <label class="nav-link " style="font-size: 30px">Hello, ${name}</label>
+                                <label class="nav-link " style="font-size: 30px">Hello, ${fullName}</label>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link login-button"

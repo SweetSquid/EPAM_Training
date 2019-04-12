@@ -49,7 +49,7 @@
                         </ul>
                         <ul class="navbar-nav ml-auto mt-10">
                             <li class="nav-item">
-                                <label class="nav-link " style="font-size: 30px">Hello, ${name}</label>
+                                <label class="nav-link " style="font-size: 30px">Hello, ${fullname}</label>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link login-button"
@@ -75,40 +75,46 @@
     </div>
     <!-- Container End -->
 </section>
+
 <section class="dashboard section">
     <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0 w-100">
         <!-- Recently Favorited -->
-        <div class="widget dashboard-container my-adslist">
+        <div class="widget dashboard-container my-adslist" style="background: #F5F5F5">
             <h3 class="widget-header">User's tax returns</h3>
-            <table class="table table-responsive product-dashboard-table text-center">
-                <thead >
+
+            <table class="table">
+                <thead>
                 <tr>
-                    <th class="text-center w-25">Action</th>
-                    <th class="text-center w-25">Message</th>
-                    <th class="text-center w-25">Date</th>
-                    <th class="text-center w-25">Edit</th>
+                    <th scope="col">Action</th>
+                    <th scope="col">Message</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Edit</th>
                 </tr>
                 </thead>
+                <tbody>
+                <%--//TODO сделать сортировку по кнопкам--%>
                 <c:forEach items="${userActionReportList}" var="actionReport">
-                    <tbody>
                     <tr>
-                        <td><span class="categories w-25 col1"><c:out
+                        <td class="w-25"><span class="categories ol1"><c:out
                                 value="${actionReport.getAction()}"/></span></td>
-                        <td><span class="categories w-25 col1"><c:out
-                                value="${actionReport.getMessage()}"/></span></td>
-                        <td><span class="categories w-25 col1"><c:out
+                        <td class="w-25"><span class="categories col1"><c:out
+                                value="${actionReport.getMessage()}"/></span>
+                        </td>
+                        <td class="w-25"><span class="categories col1"><c:out
                                 value="${actionReport.getDate()}"/></span></td>
-                        <c:if test="${actionReport.getAction() eq 'EDIT'}">
-                            <td>
+
+                        <td class="w-25">
                                 <span class="categories w-25 col1">
-                                    <a class="nav-link nav-item" href="${pageContext.request.contextPath}/taxreturn/action-report-list/edit?editActionId=${actionReport.getReport_id()}">Edit</a>
+                                    <c:if test="${actionReport.getAction() eq 'EDIT'}"> <a class="nav-link nav-item"
+                                      href="${pageContext.request.contextPath}/taxreturn/action-report-list/edit?editActionId=${actionReport.getReport_id()}">Edit</a> </c:if>
                                 </span>
-                            </td>
-                        </c:if>
+                        </td>
+
                     </tr>
-                    </tbody>
                 </c:forEach>
+                </tbody>
             </table>
+
 
         </div>
     </div>

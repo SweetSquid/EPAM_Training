@@ -8,7 +8,7 @@ import com.finalproject.controller.command.guest.Registration;
 import com.finalproject.controller.command.inspector.Approve;
 import com.finalproject.controller.command.inspector.Edit;
 import com.finalproject.controller.command.inspector.TaxReturnData;
-import com.finalproject.model.entity.enums.Role;
+import com.finalproject.model.entity.User.Role;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

@@ -12,12 +12,17 @@
 
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/js/bootstrap.js">
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <body class="body-wrapper">
-
+<%--display: flex;--%>
+<%--flex-direction: column;--%>
+<%--justify-content: center;--%>
+<%--position: relative;--%>
+<%--bottom: 5px;--%>
 <section>
     <div class="container">
         <div class="row">
@@ -75,9 +80,10 @@
 <section class="dashboard section">
     <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
         <!-- Recently Favorited -->
-        <div class="widget dashboard-container my-adslist">
+        <div class="widget dashboard-container my-adslist" style="background: #F5F5F5">
             <h3 class="widget-header">Tax returns</h3>
-            <table class="table table-responsive product-dashboard-table">
+
+            <table class="table ">
                 <thead>
                 <tr>
                     <th>User</th>
@@ -89,12 +95,12 @@
                     <tbody>
                     <tr>
                         <td class="product-details">
-                            <span class="add-id"><strong>Username:</strong> <c:out
+                            <span class="categories ol1"><strong>Username:</strong> <c:out
                                     value="${taxReturn.getUserId()}"/></span>
-                            <span><strong>Posted on: </strong><time><c:out
+                            <span class="categories ol1"><strong>Posted on: </strong><time><c:out
                                     value="${taxReturn.getDate()}"/></time> </span>
                         </td>
-                        <td class="product-category"><span class="categories"><c:out
+                        <td class="product-category"><span class="categories ol1"><c:out
                                 value="${taxReturn.getCategory()}"/></span></td>
                         <td class="action" data-title="Action">
                             <div class="">
@@ -121,6 +127,8 @@
                     </tbody>
                 </c:forEach>
             </table>
+
+
 
         </div>
     </div>

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,6 +13,8 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="${pageContext.request.contextPath}/webjars/jquery/3.0.0/jquery.js"></script>
+
 </head>
 
 <body class="body-wrapper">
@@ -40,6 +43,7 @@
                                 <a class="nav-link login-button"
                                    href="${pageContext.request.contextPath}/taxreturn/registration">Registration</a>
                             </li>
+
                         </ul>
                     </div>
                 </nav>
@@ -56,9 +60,13 @@
                     <h3 class="bg-gray p-4">Register Now</h3>
                     <form method="post" action="${pageContext.request.contextPath}/taxreturn/registration">
                         <fieldset class="p-4">
-                            <input type="text" name="name" placeholder="Name*" class="border p-3 w-100 my-2"
+                            <input type="text" name="fullName" placeholder="Full name*" class="border p-3 w-100 my-2"
                                    required>
                             <input type="text" name="username" placeholder="Username*" class="border p-3 w-100 my-2"
+                                   required>
+                            <input type="text" name="idCode" placeholder="ID code*" class="border p-3 w-100 my-2"
+                                   required>
+                            <input type="text" name="phone" placeholder="Phone*" class="border p-3 w-100 my-2"
                                    required>
                             <input type="email" name="email" placeholder="Email*" class="border p-3 w-100 my-2"
                                    required>
@@ -70,6 +78,12 @@
                                     Register Now
                                 </button>
                             </div>
+                            <c:if test="${notUnique != null}">
+                                <div class="alert alert-danger">
+                                        ${notUnique}
+                                </div>
+                            </c:if>
+
                         </fieldset>
                     </form>
                 </div>
@@ -89,7 +103,8 @@
                         <script>
                             var CurrentYear = new Date().getFullYear()
                             document.write(CurrentYear)
-                        </script>. All Rights Reserved
+                        </script>
+                        . All Rights Reserved
                     </p>
                 </div>
             </div>
@@ -108,3 +123,11 @@
 
 </body>
 </html>
+
+<script>
+    window.setTimeout(function() {
+        $(".alert").fadeTo(500, 0).slideUp(500, function(){
+            $(this).remove();
+        });
+    }, 2500);
+</script>

@@ -37,4 +37,9 @@ public class JDBCDaoFactory extends DaoFactory {
     public JDBCActionReportFactory createActionReport() {
         return new JDBCActionReportFactory(getConnection());
     }
+
+    @Override
+    public JDBCHistoryFactory createHistory() {
+        return new JDBCHistoryFactory(getConnection());
+    }
 }

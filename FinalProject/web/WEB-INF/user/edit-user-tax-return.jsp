@@ -45,7 +45,7 @@
                         </ul>
                         <ul class="navbar-nav ml-auto mt-10">
                             <li class="nav-item">
-                                <label class="nav-link " style="font-size: 30px">Hello, ${name}</label>
+                                <label class="nav-link " style="font-size: 30px">Hello, ${fullname}</label>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link login-button"
@@ -59,27 +59,26 @@
     </div>
 </section>
 
+
 <section class="login py-5 border-top-1">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-5 col-md-8 align-item-center">
                 <div class="border border">
-                    <h3 class="bg-gray p-4">Edit tax return</h3>
-                    <form method="post" action="${pageContext.request.contextPath}/taxreturn/action-report-list/edit">
+                    <h3 class="bg-gray p-4">New tax return</h3>
+                    <form method="post" action="${pageContext.request.contextPath}/taxreturn/new-tax-return">
                         <fieldset class="p-4">
-
-                            <select name="taxType" class="w-100 form-control mt-lg-2 mt-md-2 border"
-                                    style=" color: #666666; font-size: 14px; font-weight: 400; font-family: sans-serif">
-                                <option>Тип налога</option>
-                                <c:forEach items="${taxList}" var="tax">
-                                    <option><c:out value="${tax}"/></option>
-                                </c:forEach>
-                            </select>
-
-                            <textarea  class="border p-3 w-100 my-3 " id="textarea" v-model="text" placeholder="Enter something..." maxlength="800" style="resize: none">
-
-                            </textarea>
-
+                            <label class="w-100"> Тип налога
+                                <select name="taxCategory" class="w-100 form-control mt-lg-2 mt-md-2 border"
+                                        style=" color: #666666; font-size: 14px; font-weight: 400; font-family: sans-serif">
+                                    <c:forEach items="${taxList}" var="tax">
+                                        <option><c:out value="${tax.getInstance()}"/></option>
+                                    </c:forEach>
+                                </select>
+                            </label>
+                            <input type="text" name="wage" <%--value="Wage"--%> placeholder="Wage" class="border p-3 w-100 my-2" required> <br>
+                            <input type="text" name="militaryCollection" <%--value="militaryCollection"--%> placeholder="Military Collection (1%)" class="border p-3 w-100 my-2" required> <br>
+                            <input type="text" name="incomeTax" <%--value="incomeTax"--%> placeholder="Income tax (20%)" class="border p-3 w-100 my-2" required> <br>
                             <div class="loggedin-forgot d-inline-flex my-1">
                                 <button type="submit"
                                         class="d-block py-3 px-4 bg-primary text-white border-0 rounded font-weight-bold">

@@ -306,7 +306,7 @@ ul.pagination .active a {
 
 .section {
     padding: 2% 2% 2% 27%;
-    background: #F5F5F5;
+
 }
 
 .dropdown-menu {
@@ -582,7 +582,7 @@ ul.pagination .active a {
 }
 
 .dashboard-container .product-details {
-    width: 45%;
+    width: 65%;
 }
 
 .dashboard-container .product-details span {
@@ -606,7 +606,7 @@ ul.pagination .active a {
 }
 
 .dashboard-container .product-category {
-    width: 15%;
+    width: 25%;
     text-align: center;
 }
 

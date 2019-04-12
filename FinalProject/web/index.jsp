@@ -37,7 +37,8 @@
 
                         <ul class="navbar-nav ml-auto mt-10">
                             <li class="nav-item">
-                                <a class="nav-link login-button" href="${pageContext.request.contextPath}/taxreturn/login">Login</a>
+                                <a class="nav-link login-button"
+                                   href="${pageContext.request.contextPath}/taxreturn/login">Login</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link login-button"
@@ -58,6 +59,7 @@
         <div class="row justify-content-md-center text-center">
             <div class="col-md-8">
                 <div class="content-holder" style="size: auto">
+
                 </div>
             </div>
         </div>
@@ -78,7 +80,8 @@
                         <script>
                             var CurrentYear = new Date().getFullYear()
                             document.write(CurrentYear)
-                        </script>. All Rights Reserved
+                        </script>
+                        . All Rights Reserved
                     </p>
                 </div>
             </div>

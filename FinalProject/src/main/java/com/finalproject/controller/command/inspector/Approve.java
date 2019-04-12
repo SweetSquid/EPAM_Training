@@ -15,21 +15,19 @@ import java.util.Optional;
 public class Approve implements Command {
     @Override
     public String execute(HttpServletRequest request) {
+        //TODO add to history
         JDBCActionReportFactory dao = DaoFactory.getInstance().createActionReport();
         int taxReturnId = Integer.parseInt((String) request.getAttribute("userTaxReturnId"));
         ActionReport.Action action = ActionReport.Action.APPROVED;
         LocalDateTime date = LocalDateTime.now();
-
         ActionReport actionReport = new ActionReport();
         actionReport.setAction(action);
         actionReport.setDate(date);
         System.out.println(actionReport.getReport_id() + " " + taxReturnId);
         dao.create(actionReport,taxReturnId);
-
         List<TaxReturn> taxReturnList = (List<TaxReturn>) request.getSession().getAttribute("taxReturnList");
         JDBCTaxReturnFactory taxReturnDao = DaoFactory.getInstance().createTaxReturn();
         Optional<TaxReturn> taxReturn = taxReturnDao.findById(Integer.parseInt(String.valueOf(request.getAttribute("userTaxReturnId"))));
-
         if (taxReturn.isPresent()) {
             System.out.println(taxReturn.get().getDate());
             System.out.println(taxReturnList.remove(taxReturn.get()));

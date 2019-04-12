@@ -1,15 +1,25 @@
 package com.finalproject.model.entity;
 
+import com.finalproject.model.entity.ActionReport.Action;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class ActionReport {
-
+public class History {
+    private int taxReturnId;
     private int report_id;
+    private int userId;
     private Action action;
     private String message;
     private LocalDateTime date;
-    private int taxReturnId;
+
+    public int getTaxReturnId() {
+        return taxReturnId;
+    }
+
+    public void setTaxReturnId(int taxReturnId) {
+        this.taxReturnId = taxReturnId;
+    }
 
     public int getReport_id() {
         return report_id;
@@ -17,6 +27,14 @@ public class ActionReport {
 
     public void setReport_id(int report_id) {
         this.report_id = report_id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public Action getAction() {
@@ -47,39 +65,29 @@ public class ActionReport {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ActionReport that = (ActionReport) o;
-        return report_id == that.report_id &&
-                taxReturnId == that.taxReturnId &&
-                action == that.action &&
-                Objects.equals(message, that.message) &&
-                Objects.equals(date, that.date);
+        History history = (History) o;
+        return taxReturnId == history.taxReturnId &&
+                report_id == history.report_id &&
+                userId == history.userId &&
+                action == history.action &&
+                Objects.equals(message, history.message) &&
+                Objects.equals(date, history.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(report_id, action, message, date, taxReturnId);
+        return Objects.hash(taxReturnId, report_id, userId, action, message, date);
     }
 
     @Override
     public String toString() {
-        return "ActionReport{" +
-                "report_id=" + report_id +
+        return "History{" +
+                "taxReturnId=" + taxReturnId +
+                ", report_id=" + report_id +
+                ", userId=" + userId +
                 ", action=" + action +
                 ", message='" + message + '\'' +
                 ", date=" + date +
-                ", taxReturnId=" + taxReturnId +
                 '}';
-    }
-
-    public int getTaxReturnId() {
-        return taxReturnId;
-    }
-
-    public void setTaxReturnId(int taxReturnId) {
-        this.taxReturnId = taxReturnId;
-    }
-
-    public enum Action {
-        APPROVED, EDIT
     }
 }

@@ -1,17 +1,17 @@
 package com.finalproject.model.entity;
 
 
-import com.finalproject.model.entity.enums.Role;
-
 import java.util.Objects;
 
 public class User {
     //TODO применить билдер для создания объекта
     private int id;
     private Role role;
-    private String name;
+    private String fullname;
     private String username;
+    private String phone;
     private String email;
+    private String idCode;
     //TODO сохранять пароль Jbcrypt
     private String password;
 
@@ -31,12 +31,12 @@ public class User {
         this.role = role;
     }
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getUsername() {
@@ -63,17 +63,7 @@ public class User {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", role=" + role +
-                ", name='" + name + '\'' +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -82,14 +72,37 @@ public class User {
         User user = (User) o;
         return id == user.id &&
                 role == user.role &&
-                Objects.equals(name, user.name) &&
+                Objects.equals(fullname, user.fullname) &&
                 Objects.equals(username, user.username) &&
                 Objects.equals(email, user.email) &&
-                Objects.equals(password, user.password);
+                Objects.equals(phone, user.phone) &&
+                Objects.equals(idCode, user.idCode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, role, name, username, email, password);
+        return Objects.hash(id, role, fullname, username, phone, email, idCode);
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getIdCode() {
+        return idCode;
+    }
+
+    public void setIdCode(String idCode) {
+        this.idCode = idCode;
+    }
+
+    public enum Role {
+        ADMIN,
+        INSPECTOR,
+        USER;
     }
 }
