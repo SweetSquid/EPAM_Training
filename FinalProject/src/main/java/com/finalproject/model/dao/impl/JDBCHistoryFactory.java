@@ -4,11 +4,7 @@ import com.finalproject.model.dao.HistoryDao;
 import com.finalproject.model.entity.ActionReport.Action;
 import com.finalproject.model.entity.History;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.ZoneOffset;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,11 +20,10 @@ public class JDBCHistoryFactory implements HistoryDao {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(JDBCHistorySQL.CREATE.QUERY);
             preparedStatement.setInt(1, history.getTaxReturnId());
-            preparedStatement.setInt(2, history.getReport_id());
-            preparedStatement.setInt(3, history.getUserId());
-            preparedStatement.setString(4, history.getAction().toString());
-            preparedStatement.setString(5,history.getMessage());
-            preparedStatement.setObject(6,history.getDate());
+            preparedStatement.setInt(2, history.getUserId());
+            preparedStatement.setString(3, history.getAction().toString());
+            preparedStatement.setString(4,history.getMessage());
+            preparedStatement.setObject(5,history.getDate());
             preparedStatement.execute();
             return true;
         } catch (SQLException e) {
@@ -41,18 +36,19 @@ public class JDBCHistoryFactory implements HistoryDao {
     public History extractFromResultSet(ResultSet rs) throws SQLException {
         History history = new History();
         history.setTaxReturnId(rs.getInt("tax_return_id"));
-        history.setReport_id(rs.getInt("report_id"));
         history.setUserId(rs.getInt("user_id"));
         history.setAction(Action.valueOf(rs.getString("action")));
         history.setMessage(rs.getString("message"));
-        history.setDate(rs.getDate("date").toLocalDate().atStartOfDay(ZoneOffset.UTC).toLocalDateTime());
+        Timestamp date = (Timestamp) rs.getObject("date");
+        //TODO убрать t из вывода
+        history.setDate(date.toLocalDateTime());
         return history;
     }
 
     @Override
     public History readId(int id) {
         History result = new History();
-        try (PreparedStatement ps = connection.prepareCall(JDBCHistorySQL.READ_ALL.QUERY)) {
+        try (PreparedStatement ps = connection.prepareCall(JDBCHistorySQL.READ.QUERY)) {
             ps.setInt(1,id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -99,7 +95,17 @@ public class JDBCHistoryFactory implements HistoryDao {
 
     @Override
     public List<History> getByUser(int userId) {
-        return null;
+        List<History> result = new ArrayList<>();
+        try (PreparedStatement ps = connection.prepareCall(JDBCHistorySQL.READ_BY_USER.QUERY)) {
+            ps.setInt(1,userId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                result.add(extractFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     enum JDBCHistorySQL{
@@ -107,7 +113,8 @@ public class JDBCHistoryFactory implements HistoryDao {
                 "FROM action_report a\n" +
                 "       LEFT JOIN tax_return b ON a.tax_return_id = b.tax_return_id" +
                 "WHERE history_id = ?;"),
-        CREATE("INSERT INTO history (tax_return_id, report_id, user_id, action, message, date) VALUES (?, ?, ?, ?, ?, ?)"),
+        READ_BY_USER("SELECT * FROM history WHERE user_id = ?"),
+        CREATE("INSERT INTO history (tax_return_id, user_id, action, message, date) VALUES (?, ?, ?, ?, ?)"),
         READ_ALL("SELECT * FROM history");
 
         String QUERY;

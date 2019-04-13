@@ -3,11 +3,7 @@ package com.finalproject.model.dao.impl;
 import com.finalproject.model.dao.ActionReportDao;
 import com.finalproject.model.entity.ActionReport;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.ZoneOffset;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +36,9 @@ public class JDBCActionReportFactory implements ActionReportDao {
         actionReport.setReport_id(rs.getInt("report_id"));
         actionReport.setAction(ActionReport.Action.valueOf(rs.getString("action")));
         actionReport.setMessage(rs.getString("message"));
-        actionReport.setDate(rs.getDate("date").toLocalDate().atStartOfDay(ZoneOffset.UTC).toLocalDateTime());
+        Timestamp date = (Timestamp) rs.getObject("date");
+        //TODO убрать t из вывода
+        actionReport.setDate(date.toLocalDateTime());;
         actionReport.setTaxReturnId(rs.getInt("tax_return_id"));
         return actionReport;
     }
@@ -119,7 +117,7 @@ public class JDBCActionReportFactory implements ActionReportDao {
 
     enum ActionReportSQL {
         CREATE_ACTION_REPORT("INSERT INTO action_report (report_id, action, message, date, tax_return_id) VALUES (DEFAULT, ?, ?, ?, ?)"),
-        READ_ACTION_REPORT_LIST_BY_USER("SELECT * FROM action_report WHERE tax_return_id = ?"),
+        READ_ACTION_REPORT_LIST_BY_USER("SELECT a.* FROM action_report a LEFT JOIN tax_return b ON a.tax_return_id = b.tax_return_id WHERE b.user_id = ?"),
         READ_ALL("SELECT * FROM action_report"),
         READ_ID("SELECT * FROM action_report WHERE report_id = ?"),
         DELETE_REPORT("DELETE FROM action_report WHERE report_id = ?");

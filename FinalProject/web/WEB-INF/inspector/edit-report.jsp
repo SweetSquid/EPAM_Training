@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -54,24 +55,46 @@
 </section>
 
 
-<section class="overly bg-3 section-sm">
-    <!-- Container Start -->
+<section class="login py-5 border-top-1">
     <div class="container">
-        <div class="row justify-content-md-center text-center">
-            <div class="col-md-8">
-                <div style="size: auto; color: #07ad76">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-8 align-item-center">
+                <div class="border">
+                    <h3 class="bg-gray p-4">Edit</h3>
+                    <form method="post" action="${pageContext.request.contextPath}/taxreturn/edit?id=${editAction.getId()}">
+                        <fieldset class="p-4">
+                            <ul>
+                                <li><span class="categories ol1"><strong>User id:</strong> <c:out
+                                        value="${editAction.getUserId()}"/></span></li>
+                                <li><span class="categories ol1"><strong>Tax return id:</strong> <c:out
+                                        value="${editAction.getId()}"/></span></li>
+                                <li><span class="categories ol1"><strong>Wage:</strong> <c:out
+                                        value="${editAction.getWage()}"/></span></li>
+                                <li><span class="categories ol1"><strong>Military collection:</strong> <c:out
+                                        value="${editAction.getMilitaryCollection()}"/></span></li>
+                                <li><span class="categories ol1"><strong>Income tax:</strong> <c:out
+                                        value="${editAction.getIncomeTax()}"/></span></li>
+                                <li><span class="categories ol1"><strong>Posted on: </strong><time> <c:out
+                                        value="${editAction.getDate()}"/></time> </span></li>
+                            </ul>
+                            <textarea name="message" class="border p-3 w-100 my-3 " placeholder="Enter something..." maxlength="800" style="resize: none"></textarea>
+
+                            <div class="loggedin-forgot d-inline-flex my-1">
+                                <button type="submit"
+                                        class="d-block py-3 px-4 bg-primary text-white border-0 rounded font-weight-bold">
+                                    Send tax return
+                                </button>
+                            </div>
+
+                        </fieldset>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Container End -->
 </section>
 
 
 <jsp:include page="${pageContext.request.contextPath}/footer.jsp"/>
 </body>
 </html>
-
-
-
-

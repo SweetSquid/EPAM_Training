@@ -15,8 +15,15 @@ public class Edit implements Command {
         String taxCategory = request.getParameter("taxCategory");
         String wage = request.getParameter("wage");
         String militaryCollection = request.getParameter("militaryCollection");
+        JDBCActionReportFactory actionReportFactory = DaoFactory.getInstance().createActionReport();
+        JDBCTaxReturnFactory taxReturnFactory = DaoFactory.getInstance().createTaxReturn();
+        request.setAttribute("message",actionReportFactory.readId(Integer.parseInt(String.valueOf(request.getSession()
+                .getAttribute("editActionReturnId")))).getMessage());
+        request.setAttribute("taxReturn",taxReturnFactory.getTaxReturnByActionId(Integer.parseInt(String.valueOf(request.getSession().getAttribute("editActionReturnId")))));
         String incomeTax = request.getParameter("incomeTax");
-        //TODO add to history table
+        actionReportFactory.close();
+        taxReturnFactory.close();
+
         if (taxCategory != null && wage != null && militaryCollection != null && incomeTax != null) {
             int editActionId = Integer.parseInt(String.valueOf(request.getSession().getAttribute("editActionReturnId")));
             DaoFactory daoFactory = DaoFactory.getInstance();
@@ -28,11 +35,13 @@ public class Edit implements Command {
             taxReturn.setMilitaryCollection(Double.parseDouble(militaryCollection));
             taxReturn.setIncomeTax(Double.parseDouble(incomeTax));
             dao.update(taxReturn, taxReturn.getId());
-            JDBCActionReportFactory actionReportFactory = daoFactory.createActionReport();
+            actionReportFactory = daoFactory.createActionReport();
+
             if (dao.taxReturnHasReport(taxReturn.getId())){
                 actionReportFactory.delete(editActionId);
             }
             dao.close();
+            actionReportFactory.close();
             return "redirect:taxreturn";
         }
         return "/WEB-INF/user/edit-user-tax-return.jsp";

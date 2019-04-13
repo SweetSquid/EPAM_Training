@@ -23,10 +23,7 @@
         <div class="row">
             <div class="col-md-12">
                 <nav class="navbar navbar-expand-lg navbar-light navigation">
-                    <a class="navbar-brand" href="${pageContext.request.contextPath}/taxreturn"
-                       style="width: 10%; height: 10%;">
-                        <img src="${pageContext.request.contextPath}/images/index_pic.jpg"
-                             style="width: 72.5%; height: 72.5%;" alt="">
+                    <a class="navbar-brand fa fa-home fa-3x" href="${pageContext.request.contextPath}/taxreturn">
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent"
@@ -45,13 +42,16 @@
                                    href="${pageContext.request.contextPath}/taxreturn/action-report-list">Action report
                                     list</a>
                             </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/history">History</a>
+                            </li>
 
                         </ul>
                         <ul class="navbar-nav ml-auto mt-10">
                             <li class="nav-item">
                                 <label class="nav-link " style="font-size: 30px">Hello, ${fullname}</label>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item logoutButton">
                                 <a class="nav-link login-button"
                                    href="${pageContext.request.contextPath}/taxreturn/logout">Logout</a>
                             </li>
@@ -75,7 +75,7 @@
     </div>
     <!-- Container End -->
 </section>
-
+<c:if test="${ not empty userActionReportList}">
 <section class="dashboard section">
     <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0 w-100">
         <!-- Recently Favorited -->
@@ -102,55 +102,36 @@
                         </td>
                         <td class="w-25"><span class="categories col1"><c:out
                                 value="${actionReport.getDate()}"/></span></td>
-
                         <td class="w-25">
                                 <span class="categories w-25 col1">
                                     <c:if test="${actionReport.getAction() eq 'EDIT'}"> <a class="nav-link nav-item"
                                       href="${pageContext.request.contextPath}/taxreturn/action-report-list/edit?editActionId=${actionReport.getReport_id()}">Edit</a> </c:if>
                                 </span>
                         </td>
-
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
-
-
         </div>
     </div>
 </section>
-<!-- Footer Bottom -->
-<footer class="footer-bottom">
-    <!-- Container Start -->
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6 col-12">
-                <!-- Copyright -->
-                <div class="copyright">
-                    <p>Copyright
-                        <script>
-                            var CurrentYear = new Date().getFullYear()
-                            document.write(CurrentYear)
-                        </script>
-                        . All Rights Reserved
-                    </p>
+</c:if>
+
+<c:if test="${empty userActionReportList}">
+    <section class="overly  section-sm" style="margin-top:20vh">
+        <!-- Container Start -->
+        <div class="container">
+            <div class="row justify-content-md-center text-center">
+                <div class="col-md-8" >
+                    <p style="font-size: 5em">No request for your reports</p>
                 </div>
             </div>
-            <div class="col-sm-6 col-12">
-                <!-- Social Icons -->
-                <ul class="social-media-icons text-right">
-                    <li><a class="fa fa-github" href="https://github.com/SweetSquid" target="_blank"></a></li>
-                    <li><a class="fa fa-instagram" href="https://www.instagram.com/sweet__squid/" target="_blank"></a>
-                    </li>
-                    <li><a class="fa fa-telegram" href="https://t.me/sweetsquid" target="_blank"></a></li>
-                </ul>
-            </div>
         </div>
-    </div>
-    <!-- Container End -->
-    <!-- To Top -->
+        <!-- Container End -->
+    </section>
+</c:if>
 
-</footer>
+<jsp:include page="${pageContext.request.contextPath}/footer.jsp"/>
 </body>
 </html>
 

@@ -6,17 +6,18 @@ import com.finalproject.model.dao.impl.JDBCActionReportFactory;
 import com.finalproject.model.entity.ActionReport;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserActionReport implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         int userId = (int) request.getSession().getAttribute("userId");
-
             JDBCActionReportFactory actionReportFactory = DaoFactory.getInstance().createActionReport();
             List<ActionReport> actionReportList = actionReportFactory.userList(userId);
-            System.out.println(Arrays.toString(actionReportList.toArray()));
+            actionReportList = actionReportList.stream()
+                    .filter(p -> p.getAction().equals(ActionReport.Action.EDIT))
+                    .collect(Collectors.toList());
             request.getSession().setAttribute("userActionReportList", actionReportList);
             actionReportFactory.close();
         return "/WEB-INF/user/user-action-report.jsp";

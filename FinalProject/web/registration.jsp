@@ -24,9 +24,7 @@
         <div class="row">
             <div class="col-md-12">
                 <nav class="navbar navbar-expand-lg navbar-light navigation">
-                    <a class="navbar-brand" href="${pageContext.request.contextPath}/taxreturn">
-                        <img src="${pageContext.request.contextPath}/images/index_pic.jpg"
-                             style="width: 10%; height: 10%;" alt="">
+                    <a class="navbar-brand fa fa-home fa-3x" href="${pageContext.request.contextPath}/taxreturn">
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent"
@@ -92,34 +90,7 @@
     </div>
 </section>
 
-<footer class="footer-bottom">
-    <!-- Container Start -->
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6 col-12">
-                <!-- Copyright -->
-                <div class="copyright">
-                    <p>Copyright
-                        <script>
-                            var CurrentYear = new Date().getFullYear()
-                            document.write(CurrentYear)
-                        </script>
-                        . All Rights Reserved
-                    </p>
-                </div>
-            </div>
-            <div class="col-sm-6 col-12">
-                <!-- Social Icons -->
-                <ul class="social-media-icons text-right">
-                    <li><a class="fa fa-github" href="https://github.com/SweetSquid" target="_blank"></a></li>
-                    <li><a class="fa fa-instagram" href="https://www.instagram.com/sweet__squid/" target="_blank"></a>
-                    </li>
-                    <li><a class="fa fa-telegram" href="https://t.me/sweetsquid" target="_blank"></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</footer>
+<jsp:include page="${pageContext.request.contextPath}/footer.jsp"/>
 
 </body>
 </html>

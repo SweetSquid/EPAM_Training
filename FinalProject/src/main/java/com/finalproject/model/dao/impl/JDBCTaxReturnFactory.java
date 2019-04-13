@@ -163,7 +163,10 @@ public class JDBCTaxReturnFactory implements TaxReturnDao {
             PreparedStatement preparedStatement = connection.prepareStatement(TaxReturnSQL.UPDATE.QUERY);
             preparedStatement.setString(1, taxReturn.getCategory());
             preparedStatement.setObject(2, taxReturn.getDate());
-            preparedStatement.setInt(3, taxReturnId);
+            preparedStatement.setDouble(3, taxReturn.getWage());
+            preparedStatement.setDouble(4, taxReturn.getMilitaryCollection());
+            preparedStatement.setDouble(5, taxReturn.getIncomeTax());
+            preparedStatement.setInt(6, taxReturnId);
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -201,7 +204,7 @@ public class JDBCTaxReturnFactory implements TaxReturnDao {
 
     enum TaxReturnSQL {
         CREATE("INSERT INTO tax_return (tax_return_id, user_id, inspector_id, category_id, date, wage, military_collection, income_tax) VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?)"),
-        UPDATE("UPDATE tax_return SET category_id = ?, date = ? WHERE tax_return_id= ?"),
+        UPDATE("UPDATE tax_return SET category_id = ?, date = ?, wage = ?, military_collection = ?, income_tax = ? WHERE tax_return_id= ?"),
         CHANGE_INSPECTOR("UPDATE tax_return SET inspector_id = ? WHERE user_id = ?"),
         GET_ALL_USER_TAXRETURN("SELECT * FROM tax_return WHERE user_id = ?"),
         GET_TAX_BY_ACTION_ID("SELECT a.* FROM tax_return a LEFT JOIN action_report b ON a.tax_return_id = b.tax_return_id WHERE b.report_id = ? AND action = 'EDIT'"),

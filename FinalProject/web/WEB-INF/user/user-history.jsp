@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -32,9 +33,18 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto main-nav ">
                             <li class="nav-item ">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/tax-return-list">Tax return list</a>
+                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/new-tax-return">New
+                                    tax return</a>
                             </li>
-                            <li class="nav-item dropdown dropdown-slide">
+
+                            <li class="nav-item ">
+                                <a class="nav-link"
+                                   href="${pageContext.request.contextPath}/taxreturn/action-report-list">Action report
+                                    list</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/history">History</a>
+                            </li>
 
                         </ul>
                         <ul class="navbar-nav ml-auto mt-10">
@@ -42,7 +52,7 @@
                                 <label class="nav-link " style="font-size: 30px">Hello, ${fullname}</label>
                             </li>
                             <li class="nav-item logoutButton">
-                                <a class="nav-link login-button "
+                                <a class="nav-link login-button"
                                    href="${pageContext.request.contextPath}/taxreturn/logout">Logout</a>
                             </li>
                         </ul>
@@ -53,8 +63,7 @@
     </div>
 </section>
 
-
-<section class="overly bg-3 section-sm">
+<section class="overly  section-sm">
     <!-- Container Start -->
     <div class="container">
         <div class="row justify-content-md-center text-center">
@@ -66,7 +75,40 @@
     </div>
     <!-- Container End -->
 </section>
+<%--<c:if test="${ not empty userActionReportList}">--%>
+<section class="dashboard section">
+    <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0 w-100">
+        <!-- Recently Favorited -->
+        <div class="widget dashboard-container my-adslist" style="background: #F5F5F5">
+            <h3 class="widget-header">User's tax returns</h3>
 
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Action</th>
+                    <th scope="col">Message</th>
+                    <th scope="col">Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <%--//TODO сделать сортировку по кнопкам--%>
+                <c:forEach items="${historyList}" var="history">
+                    <tr>
+                        <td class="w-25"><span class="categories ol1"><c:out
+                                value="${history.getAction()}"/></span></td>
+                        <td class="w-25"><span class="categories col1"><c:out
+                                value="${history.getMessage()}"/></span>
+                        </td>
+                        <td class="w-25"><span class="categories col1"><c:out
+                                value="${history.getDate()}"/></span></td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<%--</c:if>--%>
 
 <jsp:include page="${pageContext.request.contextPath}/footer.jsp"/>
 </body>

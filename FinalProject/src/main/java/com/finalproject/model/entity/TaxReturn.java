@@ -95,9 +95,6 @@ public class TaxReturn {
         this.wage = wage;
     }
 
-    public double getMillitaryCollection() {
-        return militaryCollection;
-    }
 
     public double getMilitaryCollection() {
         return militaryCollection;

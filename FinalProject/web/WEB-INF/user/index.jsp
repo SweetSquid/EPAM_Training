@@ -22,9 +22,7 @@
         <div class="row">
             <div class="col-md-12">
                 <nav class="navbar navbar-expand-lg navbar-light navigation">
-                    <a class="navbar-brand" href="${pageContext.request.contextPath}/taxreturn"  style="width: 10%; height: 10%;" >
-                        <img src="${pageContext.request.contextPath}/images/index_pic.jpg"
-                             style="width: 72.5%; height: 72.5%;" alt="">
+                    <a class="navbar-brand fa fa-home fa-3x" href="${pageContext.request.contextPath}/taxreturn">
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,17 +33,18 @@
                             <li class="nav-item ">
                                 <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/new-tax-return">New tax return</a>
                             </li>
-
                             <li class="nav-item ">
                                 <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/action-report-list">Action report list</a>
                             </li>
-
+                            <li class="nav-item ">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/history">History</a>
+                            </li>
                         </ul>
                         <ul class="navbar-nav ml-auto mt-10">
                             <li class="nav-item">
-                                <label class="nav-link " style="font-size: 30px">Hello, ${fullName}</label>
+                                <label class="nav-link " style="font-size: 30px">Hello, ${fullname}</label>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item logoutButton">
                                 <a class="nav-link login-button"
                                    href="${pageContext.request.contextPath}/taxreturn/logout">Logout</a>
                             </li>
@@ -71,38 +70,7 @@
     <!-- Container End -->
 </section>
 
-
-<!-- Footer Bottom -->
-<footer class="footer-bottom">
-    <!-- Container Start -->
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6 col-12">
-                <!-- Copyright -->
-                <div class="copyright">
-                    <p>Copyright
-                        <script>
-                            var CurrentYear = new Date().getFullYear()
-                            document.write(CurrentYear)
-                        </script>. All Rights Reserved
-                    </p>
-                </div>
-            </div>
-            <div class="col-sm-6 col-12">
-                <!-- Social Icons -->
-                <ul class="social-media-icons text-right">
-                    <li><a class="fa fa-github" href="https://github.com/SweetSquid" target="_blank"></a></li>
-                    <li><a class="fa fa-instagram" href="https://www.instagram.com/sweet__squid/" target="_blank"></a>
-                    </li>
-                    <li><a class="fa fa-telegram" href="https://t.me/sweetsquid" target="_blank"></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!-- Container End -->
-    <!-- To Top -->
-
-</footer>
+<jsp:include page="${pageContext.request.contextPath}/footer.jsp"/>
 </body>
 </html>
 

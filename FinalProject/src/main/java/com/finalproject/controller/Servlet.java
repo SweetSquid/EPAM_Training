@@ -45,7 +45,6 @@ public class Servlet extends HttpServlet {
         if (request.getParameter("editActionId") != null){
             request.getSession().setAttribute("editActionReturnId",request.getParameter("editActionId"));
         }
-        System.out.println(request.getSession().getAttribute("editActionReturnId"));
         path = path.replaceAll(".*/taxreturn/", "");
         commands = (Map<String, Command>) request.getSession().getAttribute("commands");
         Command command = commands.getOrDefault(path,

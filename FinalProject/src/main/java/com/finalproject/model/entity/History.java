@@ -7,7 +7,6 @@ import java.util.Objects;
 
 public class History {
     private int taxReturnId;
-    private int report_id;
     private int userId;
     private Action action;
     private String message;
@@ -19,14 +18,6 @@ public class History {
 
     public void setTaxReturnId(int taxReturnId) {
         this.taxReturnId = taxReturnId;
-    }
-
-    public int getReport_id() {
-        return report_id;
-    }
-
-    public void setReport_id(int report_id) {
-        this.report_id = report_id;
     }
 
     public int getUserId() {
@@ -67,7 +58,6 @@ public class History {
         if (o == null || getClass() != o.getClass()) return false;
         History history = (History) o;
         return taxReturnId == history.taxReturnId &&
-                report_id == history.report_id &&
                 userId == history.userId &&
                 action == history.action &&
                 Objects.equals(message, history.message) &&
@@ -76,14 +66,13 @@ public class History {
 
     @Override
     public int hashCode() {
-        return Objects.hash(taxReturnId, report_id, userId, action, message, date);
+        return Objects.hash(taxReturnId, userId, action, message, date);
     }
 
     @Override
     public String toString() {
         return "History{" +
                 "taxReturnId=" + taxReturnId +
-                ", report_id=" + report_id +
                 ", userId=" + userId +
                 ", action=" + action +
                 ", message='" + message + '\'' +
