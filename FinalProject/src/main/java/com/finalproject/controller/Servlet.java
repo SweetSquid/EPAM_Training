@@ -9,12 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
 public class Servlet extends HttpServlet {
-    private Map<String, Command> commands = new HashMap<>();
     private HashSet<String> loggedUsers = new HashSet<>();
 
     public void init() {
@@ -31,6 +29,7 @@ public class Servlet extends HttpServlet {
         processRequest(request, response);
     }
 
+    @SuppressWarnings("unchecked")
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setAttribute("taxList", TaxReturn.Category.values());
@@ -46,12 +45,10 @@ public class Servlet extends HttpServlet {
             request.getSession().setAttribute("editActionReturnId",request.getParameter("editActionId"));
         }
         path = path.replaceAll(".*/taxreturn/", "");
-        commands = (Map<String, Command>) request.getSession().getAttribute("commands");
+        Map<String, Command> commands = (Map<String, Command>) request.getSession().getAttribute("commands");
         Command command = commands.getOrDefault(path,
         (r) -> "redirect:error");
         String page = command.execute(request);
-
-
 
         if (page.contains("redirect")) {
             response.sendRedirect(page.replace("redirect:", "/"));

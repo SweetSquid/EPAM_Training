@@ -60,7 +60,7 @@
                     <h3 class="bg-gray p-4">Login Now</h3>
                     <form method="post" action="${pageContext.request.contextPath}/taxreturn/login">
                         <fieldset class="p-4">
-                            <input type="text" placeholder="Username" name="username" class="border p-3 w-100 my-2"
+                            <input type="text" placeholder="Username" name="username" value="${username}" class="border p-3 w-100 my-2"
                                    required>
                             <input type="password" placeholder="Password" name="password" class="border p-3 w-100 my-2"
                                    required>

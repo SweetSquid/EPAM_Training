@@ -37,7 +37,7 @@ public class NewTaxReturn implements Command {
             taxReturn.setWage(Double.parseDouble(request.getParameter("wage")));
             taxReturn.setMilitaryCollection(Double.parseDouble(request.getParameter("militaryCollection")));
             taxReturn.setIncomeTax(Double.parseDouble(request.getParameter("incomeTax")));
-
+            request.getSession().setAttribute("inspectorId",taxReturn.getInspectorId());
             dao.create(taxReturn);
             userDao.close();
             dao.close();

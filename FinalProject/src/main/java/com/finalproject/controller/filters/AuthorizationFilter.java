@@ -38,6 +38,7 @@ public class AuthorizationFilter implements Filter {
         if (role != null && role.equals(Role.ADMIN.toString())) {
             commands.put("/taxreturn", new com.finalproject.controller.command.admin.Home());
             commands.put("logged_users", new com.finalproject.controller.command.admin.LoggedUsers());
+            commands.put("change-user-inspector", new com.finalproject.controller.command.admin.ChangeUserInspector());
             commands.put("logout", new Logout());
         }
         if (role != null && role.equals(Role.USER.toString())) {
@@ -46,6 +47,7 @@ public class AuthorizationFilter implements Filter {
             commands.put("action-report-list", new com.finalproject.controller.command.user.UserActionReport());
             commands.put("action-report-list/edit", new com.finalproject.controller.command.user.Edit());
             commands.put("history", new com.finalproject.controller.command.user.UserHistory());
+            commands.put("change-inspector", new com.finalproject.controller.command.user.ChangeInspector());
             commands.put("logout", new Logout());
         }
         if (role != null && role.equals(Role.INSPECTOR.toString())) {

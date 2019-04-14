@@ -15,8 +15,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class Edit implements Command {
-    DaoFactory daoFactory = DaoFactory.getInstance();
+    private DaoFactory daoFactory = DaoFactory.getInstance();
     @Override
+    @SuppressWarnings("unchecked")
     public String execute(HttpServletRequest request) {
         JDBCTaxReturnFactory jdbcTaxReturnFactory = DaoFactory.getInstance().createTaxReturn();
         TaxReturn taxReturn1 = jdbcTaxReturnFactory.findById(Integer.parseInt(request.getParameter("id"))).get();
@@ -31,7 +32,9 @@ public class Edit implements Command {
             actionReport.setAction(action);
             actionReport.setDate(date);
             actionReport.setMessage(request.getParameter("message"));
-            dao.create(actionReport, taxReturnId);
+            actionReport.setTaxReturnId(taxReturnId);
+            dao.create(actionReport);
+
             List<TaxReturn> taxReturnList = (List<TaxReturn>) request.getSession().getAttribute("taxReturnList");
             JDBCTaxReturnFactory taxReturnDao = daoFactory.createTaxReturn();
             Optional<TaxReturn> taxReturn = taxReturnDao.findById(Integer.parseInt(String.valueOf(request.getAttribute("userTaxReturnId"))));
@@ -40,16 +43,17 @@ public class Edit implements Command {
             request.getSession().setAttribute("taxReturnList", taxReturnList);
             taxReturnDao.close();
 
-            History history = new History();
-            history.setTaxReturnId(taxReturn.get().getId());
-            history.setUserId(taxReturn.get().getUserId());
-            history.setAction(ActionReport.Action.EDIT);
-            history.setMessage(actionReport.getMessage());
-            history.setDate(LocalDateTime.now());
-            JDBCHistoryFactory jdbcHistoryFactory = DaoFactory.getInstance().createHistory();
-            jdbcHistoryFactory.create(history);
-
-            jdbcHistoryFactory.close();
+            if (taxReturn.isPresent()) {
+                History history = new History();
+                history.setTaxReturnId(taxReturn.get().getId());
+                history.setUserId(taxReturn.get().getUserId());
+                history.setAction(ActionReport.Action.EDIT);
+                history.setMessage(actionReport.getMessage());
+                history.setDate(LocalDateTime.now());
+                JDBCHistoryFactory historyDao = DaoFactory.getInstance().createHistory();
+                historyDao.create(history);
+                historyDao.close();
+            }
             dao.close();
             return "redirect:taxreturn/tax-return-list";
         }

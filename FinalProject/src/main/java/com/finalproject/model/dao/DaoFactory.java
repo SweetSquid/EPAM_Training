@@ -23,4 +23,5 @@ public abstract class DaoFactory{
     public abstract JDBCTaxReturnFactory createTaxReturn();
     public abstract JDBCActionReportFactory createActionReport();
     public abstract JDBCHistoryFactory createHistory();
+    public abstract JDBCChangeInspectorReportFactory createChangeInspectorReport();
 }

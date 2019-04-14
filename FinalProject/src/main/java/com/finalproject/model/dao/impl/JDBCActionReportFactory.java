@@ -15,13 +15,13 @@ public class JDBCActionReportFactory implements ActionReportDao {
     }
 
     @Override
-    public boolean create(ActionReport actionReport, int taxReturnId) {
+    public boolean create(ActionReport actionReport) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(ActionReportSQL.CREATE_ACTION_REPORT.QUERY);
             preparedStatement.setString(1, actionReport.getAction().toString());
             preparedStatement.setString(2, actionReport.getMessage());
             preparedStatement.setObject(3, actionReport.getDate());
-            preparedStatement.setInt(4, taxReturnId);
+            preparedStatement.setInt(4, actionReport.getTaxReturnId());
             preparedStatement.execute();
             return true;
         } catch (SQLException e) {

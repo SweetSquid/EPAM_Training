@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Tax Return</title>
+    <title>Change inspector</title>
 
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -18,7 +18,7 @@
 </head>
 <body class="body-wrapper">
 
-
+<%--//TODO поменять названия для каждой странички--%>
 <section>
     <div class="container">
         <div class="row">
@@ -65,29 +65,16 @@
         <div class="row justify-content-center">
             <div class="col-lg-5 col-md-8 align-item-center">
                 <div class="border border">
-                    <h3 class="bg-gray p-4">New tax return</h3>
-                    <form method="post" action="${pageContext.request.contextPath}/taxreturn/new-tax-return">
+                    <h3 class="bg-gray p-4">Change inspector</h3>
+                    <form method="post" action="${pageContext.request.contextPath}/taxreturn/change-inspector">
                         <fieldset class="p-4">
-                            <label class="w-100"> Тип налога
-                                <select name="taxCategory" class="w-100 form-control mt-lg-2 mt-md-2 border"
-                                        style=" color: #666666; font-size: 14px; font-weight: 400; font-family: sans-serif">
-                                    <c:forEach items="${taxList}" var="tax">
-                                        <option><c:out value="${tax.getInstance()}"/></option>
-                                    </c:forEach>
-                                </select>
-                            </label>
-                            <input type="text" name="wage" <%--value="Wage"--%> placeholder="Wage" class="border p-3 w-100 my-2" required> <br>
-                            <input type="text" name="militaryCollection" <%--value="militaryCollection"--%> placeholder="Military Collection (1%)" class="border p-3 w-100 my-2" required> <br>
-                            <input type="text" name="incomeTax" <%--value="incomeTax"--%> placeholder="Income tax (20%)" class="border p-3 w-100 my-2" required> <br>
-
+                            <textarea name="message" class="border p-3 w-100 my-3 " placeholder="Indicate the reason" maxlength="800" style="resize: none"></textarea>
+                            <div class="loggedin-forgot d-inline-flex my-1">
                                 <button type="submit"
                                         class="d-block py-3 px-4 bg-primary text-white border-0 rounded font-weight-bold">
-                                    Send tax return
+                                    Create request
                                 </button>
-                            <c:if test="${not empty inspectorId}">
-                            <a class="mt-3 d-inline-block text-primary"
-                               href="${pageContext.request.contextPath}/taxreturn/change-inspector">Change inspector</a>
-                            </c:if>
+                            </div>
                         </fieldset>
                     </form>
                 </div>

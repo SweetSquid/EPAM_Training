@@ -58,15 +58,15 @@
                     <h3 class="bg-gray p-4">Register Now</h3>
                     <form method="post" action="${pageContext.request.contextPath}/taxreturn/registration">
                         <fieldset class="p-4">
-                            <input type="text" name="fullName" placeholder="Full name*" class="border p-3 w-100 my-2"
+                            <input type="text" name="fullName" value="${fullName}" placeholder="Full name*" class="border p-3 w-100 my-2"
                                    required>
-                            <input type="text" name="username" placeholder="Username*" class="border p-3 w-100 my-2"
+                            <input type="text" name="username" value="${username}" placeholder="Username*" class="border p-3 w-100 my-2"
                                    required>
-                            <input type="text" name="idCode" placeholder="ID code*" class="border p-3 w-100 my-2"
+                            <input type="text" name="idCode" value="${idCode}" placeholder="ID code*" class="border p-3 w-100 my-2"
                                    required>
-                            <input type="text" name="phone" placeholder="Phone*" class="border p-3 w-100 my-2"
+                            <input type="text" name="phone" value="${phone}" placeholder="Phone*" class="border p-3 w-100 my-2"
                                    required>
-                            <input type="email" name="email" placeholder="Email*" class="border p-3 w-100 my-2"
+                            <input type="email" name="email" value="${email}" placeholder="Email*" class="border p-3 w-100 my-2"
                                    required>
                             <input type="password" name="password" placeholder="Password*" class="border p-3 w-100 my-2"
                                    required>

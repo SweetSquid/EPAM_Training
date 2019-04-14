@@ -9,15 +9,12 @@ import java.util.logging.Logger;
 
 public class JDBCDaoFactory extends DaoFactory {
     private DataSource dataSource = ConnectionPoolHolder.getDataSource();
-    final static Logger LOGGER = Logger.getLogger(JDBCDaoFactory.class.getSimpleName());
+    private final static Logger LOGGER = Logger.getLogger(JDBCDaoFactory.class.getSimpleName());
 
-
-    public Connection getConnection() {
+    private Connection getConnection() {
         try {
-            LOGGER.info("connection good");
             return dataSource.getConnection();
         } catch (SQLException e) {
-            LOGGER.info("connection bad");
             throw new RuntimeException(e);
         }
     }
@@ -41,5 +38,10 @@ public class JDBCDaoFactory extends DaoFactory {
     @Override
     public JDBCHistoryFactory createHistory() {
         return new JDBCHistoryFactory(getConnection());
+    }
+
+    @Override
+    public JDBCChangeInspectorReportFactory createChangeInspectorReport() {
+        return new JDBCChangeInspectorReportFactory(getConnection());
     }
 }

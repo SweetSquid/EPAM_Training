@@ -63,6 +63,21 @@
     </div>
 </section>
 
+
+<c:if test="${empty historyList}">
+    <section class="overly  section-sm" style="margin-top:20vh">
+        <!-- Container Start -->
+        <div class="container">
+            <div class="row justify-content-md-center text-center">
+                <div class="col-md-8" >
+                    <p style="font-size: 5em">No history for you</p>
+                </div>
+            </div>
+        </div>
+        <!-- Container End -->
+    </section>
+</c:if>
+
 <section class="overly  section-sm">
     <!-- Container Start -->
     <div class="container">
@@ -75,7 +90,8 @@
     </div>
     <!-- Container End -->
 </section>
-<%--<c:if test="${ not empty userActionReportList}">--%>
+
+<c:if test="${not empty historyList}">
 <section class="dashboard section">
     <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0 w-100">
         <!-- Recently Favorited -->
@@ -108,7 +124,7 @@
         </div>
     </div>
 </section>
-<%--</c:if>--%>
+</c:if>
 
 <jsp:include page="${pageContext.request.contextPath}/footer.jsp"/>
 </body>

@@ -22,6 +22,12 @@ public class Registration implements Command {
         String idCode = request.getParameter("idCode");
         String phone = request.getParameter("phone");
 
+        request.setAttribute("fullName",fullName);
+        request.setAttribute("username",username);
+        request.setAttribute("email",email);
+        request.setAttribute("idCode",idCode);
+        request.setAttribute("phone",phone);
+
         if (fullName != null && username != null
                 && email != null && password != null
                 && idCode != null && phone != null) {
@@ -48,6 +54,7 @@ public class Registration implements Command {
 
         return "/registration.jsp";
     }
+
 }
 
 

@@ -23,6 +23,7 @@ public class Login implements Command {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        request.setAttribute("username",username);
         if (username == null || password == null ||
                 username.equals("") || password.equals("")) {
             return "/login.jsp";

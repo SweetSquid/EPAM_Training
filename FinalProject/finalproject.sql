@@ -74,7 +74,7 @@ create index change_inspector_user_id_idx
   on change_inspector_report (user_id);
 
 create index change_new_inspector_id_idx
-  on change_inspector_report (new_inspecor_id);
+  on change_inspector_report (new_inspector_id);
 
 create index change_previous_inspector_id_idx
   on change_inspector_report (previous_inspector_id);
