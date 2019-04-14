@@ -23,7 +23,7 @@ public class LangFilter implements Filter {
             HttpServletResponse response = (HttpServletResponse) servletResponse;
 
             if (lang.equals("ua")) {
-                Config.set(request.getSession(), Config.FMT_LOCALE, new Locale("ua", "UA"));
+                Config.set(request.getSession(), Config.FMT_LOCALE, new Locale("uk", "UA"));
             }
             if (lang.equals("en")) {
                 Config.set(request.getSession(), Config.FMT_LOCALE, new Locale("en", "US"));
@@ -31,6 +31,7 @@ public class LangFilter implements Filter {
             response.sendRedirect(request.getHeader("referer"));
             return;
         }
+
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

@@ -1,13 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <fmt:setBundle var="link" basename="message" scope="session" />
 
     <!-- SITE TITTLE -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Registration</title>
+    <title><fmt:message key="guest.reg.header" bundle="${link}"/></title>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -18,7 +20,6 @@
 </head>
 
 <body class="body-wrapper">
-
 <section>
     <div class="container">
         <div class="row">
@@ -35,13 +36,20 @@
                         <ul class="navbar-nav ml-auto mt-10">
                             <li class="nav-item">
                                 <a class="nav-link login-button"
-                                   href="${pageContext.request.contextPath}/taxreturn/login">Login</a>
+                                   href="${pageContext.request.contextPath}/taxreturn/login"><fmt:message key="guest.header.log.in" bundle="${link}"/></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link login-button"
-                                   href="${pageContext.request.contextPath}/taxreturn/registration">Registration</a>
+                                   href="${pageContext.request.contextPath}/taxreturn/registration"><fmt:message key="guest.header.registration" bundle="${link}"/></a>
                             </li>
-
+                        </ul>
+                        <ul class="d-flex">
+                            <li><a href="${pageContext.request.contextPath}/?lang=en"><img
+                                    src="${pageContext.request.contextPath}/images/usa-flag.png" alt=""
+                                    style="width: 40px;height: 25px;margin-left: 10px"></a></li>
+                            <li><a href="${pageContext.request.contextPath}/?lang=ua"><img
+                                    src="${pageContext.request.contextPath}/images/ukraine-flag.png" alt=""
+                                    style="width: 40px;height: 25px;margin-left: 10px"></a></li>
                         </ul>
                     </div>
                 </nav>
@@ -55,25 +63,25 @@
         <div class="row justify-content-center">
             <div class="col-lg-5 col-md-8 align-item-center">
                 <div class="border border">
-                    <h3 class="bg-gray p-4">Register Now</h3>
+                    <h3 class="bg-gray p-4"><fmt:message key="guest.login.register" bundle="${link}"/></h3>
                     <form method="post" action="${pageContext.request.contextPath}/taxreturn/registration">
                         <fieldset class="p-4">
-                            <input type="text" name="fullName" value="${fullName}" placeholder="Full name*" class="border p-3 w-100 my-2"
+                            <input type="text" name="fullName" value="${fullName}" placeholder="<fmt:message key="guest.reg.fullname" bundle="${link}"/>" class="border p-3 w-100 my-2"
                                    required>
-                            <input type="text" name="username" value="${username}" placeholder="Username*" class="border p-3 w-100 my-2"
+                            <input type="text" name="username" value="${username}" placeholder="<fmt:message key="guest.reg.username" bundle="${link}"/>" class="border p-3 w-100 my-2"
                                    required>
-                            <input type="text" name="idCode" value="${idCode}" placeholder="ID code*" class="border p-3 w-100 my-2"
+                            <input type="text" name="idCode" value="${idCode}" placeholder="<fmt:message key="guest.reg.idcode" bundle="${link}"/>" class="border p-3 w-100 my-2"
                                    required>
-                            <input type="text" name="phone" value="${phone}" placeholder="Phone*" class="border p-3 w-100 my-2"
+                            <input type="text" name="phone" value="${phone}" placeholder="<fmt:message key="guest.reg.phone" bundle="${link}"/>" class="border p-3 w-100 my-2"
                                    required>
-                            <input type="email" name="email" value="${email}" placeholder="Email*" class="border p-3 w-100 my-2"
+                            <input type="email" name="email" value="${email}" placeholder="<fmt:message key="guest.reg.email" bundle="${link}"/>" class="border p-3 w-100 my-2"
                                    required>
-                            <input type="password" name="password" placeholder="Password*" class="border p-3 w-100 my-2"
+                            <input type="password" name="password" placeholder="<fmt:message key="guest.reg.password" bundle="${link}"/>" class="border p-3 w-100 my-2"
                                    required>
                             <div class="loggedin-forgot d-inline-flex my-3">
                                 <button type="submit"
                                         class="d-block py-3 px-4 bg-primary text-white border-0 rounded font-weight-bold">
-                                    Register Now
+                                    <fmt:message key="guest.login.register" bundle="${link}"/>
                                 </button>
                             </div>
                             <c:if test="${notUnique != null}">

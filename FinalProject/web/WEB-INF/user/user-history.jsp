@@ -1,15 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+    <fmt:setBundle var="link" basename="message" scope="session" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Tax Return</title>
-
+    <title><fmt:message key="user.history.name" bundle="${link}"/></title>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
@@ -25,36 +25,36 @@
                 <nav class="navbar navbar-expand-lg navbar-light navigation">
                     <a class="navbar-brand fa fa-home fa-3x" href="${pageContext.request.contextPath}/taxreturn">
                     </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent"
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto main-nav ">
                             <li class="nav-item ">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/new-tax-return">New
-                                    tax return</a>
-                            </li>
-
-                            <li class="nav-item ">
-                                <a class="nav-link"
-                                   href="${pageContext.request.contextPath}/taxreturn/action-report-list">Action report
-                                    list</a>
+                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/new-tax-return"><fmt:message key="user.header.new" bundle="${link}"/></a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/history">History</a>
+                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/action-report-list"><fmt:message key="user.header.actionList" bundle="${link}"/></a>
                             </li>
-
+                            <li class="nav-item ">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/history"><fmt:message key="user.header.history" bundle="${link}"/></a>
+                            </li>
                         </ul>
                         <ul class="navbar-nav ml-auto mt-10">
                             <li class="nav-item">
-                                <label class="nav-link " style="font-size: 30px">Hello, ${fullname}</label>
+                                <label class="nav-link " style="font-size: 30px">${fullname}</label>
                             </li>
                             <li class="nav-item logoutButton">
                                 <a class="nav-link login-button"
-                                   href="${pageContext.request.contextPath}/taxreturn/logout">Logout</a>
+                                   href="${pageContext.request.contextPath}/taxreturn/logout"><fmt:message key="common.header.log.out" bundle="${link}"/></a>
                             </li>
+                            <li style="padding-top: 4.5%;"><a href="${pageContext.request.contextPath}/?lang=en"><img
+                                    src="${pageContext.request.contextPath}/images/usa-flag.png" alt=""
+                                    style="width: 40px;height: 25px;margin-left: 10px"></a></li>
+                            <li style="padding-top: 4.5%;"><a href="${pageContext.request.contextPath}/?lang=ua"><img
+                                    src="${pageContext.request.contextPath}/images/ukraine-flag.png" alt=""
+                                    style="width: 40px;height: 25px;margin-left: 10px"></a></li>
                         </ul>
                     </div>
                 </nav>
@@ -70,7 +70,7 @@
         <div class="container">
             <div class="row justify-content-md-center text-center">
                 <div class="col-md-8" >
-                    <p style="font-size: 5em">No history for you</p>
+                    <p style="font-size: 5em"><fmt:message key="user.history.no" bundle="${link}"/></p>
                 </div>
             </div>
         </div>
@@ -96,14 +96,14 @@
     <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0 w-100">
         <!-- Recently Favorited -->
         <div class="widget dashboard-container my-adslist" style="background: #F5F5F5">
-            <h3 class="widget-header">User's tax returns</h3>
+            <h3 class="widget-header"><fmt:message key="user.history.list" bundle="${link}"/></h3>
 
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col">Action</th>
-                    <th scope="col">Message</th>
-                    <th scope="col">Date</th>
+                    <th scope="col"><fmt:message key="inspector.tax.action" bundle="${link}"/></th>
+                    <th scope="col"><fmt:message key="admin.change.message" bundle="${link}"/></th>
+                    <th scope="col"><fmt:message key="admin.change.date" bundle="${link}"/></th>
                 </tr>
                 </thead>
                 <tbody>

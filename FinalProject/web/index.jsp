@@ -1,15 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <fmt:setBundle var="link" basename="message" scope="session"/>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Tax Return</title>
+    <title><fmt:message key="guest.main.header" bundle="${link}"/></title>
 
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -18,7 +19,6 @@
 
 </head>
 <body class="body-wrapper">
-
 <section>
     <div class="container">
         <div class="row">
@@ -36,12 +36,20 @@
                         <ul class="navbar-nav ml-auto mt-10">
                             <li class="nav-item">
                                 <a class="nav-link login-button"
-                                   href="${pageContext.request.contextPath}/taxreturn/login">Login</a>
+                                   href="${pageContext.request.contextPath}/taxreturn/login"><fmt:message key="guest.header.log.in" bundle="${link}"/></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link login-button"
-                                   href="${pageContext.request.contextPath}/taxreturn/registration">Registration</a>
+                                   href="${pageContext.request.contextPath}/taxreturn/registration"><fmt:message key="guest.header.registration" bundle="${link}"/></a>
                             </li>
+                        </ul>
+                        <ul class="d-flex">
+                            <li><a href="${pageContext.request.contextPath}/?lang=en"><img
+                                    src="${pageContext.request.contextPath}/images/usa-flag.png" alt=""
+                                    style="width: 40px;height: 25px;margin-left: 10px"></a></li>
+                            <li><a href="${pageContext.request.contextPath}/?lang=ua"><img
+                                    src="${pageContext.request.contextPath}/images/ukraine-flag.png" alt=""
+                                    style="width: 40px;height: 25px;margin-left: 10px"></a></li>
                         </ul>
                     </div>
                 </nav>
@@ -49,7 +57,6 @@
         </div>
     </div>
 </section>
-
 
 <section class=" overly bg-3 section-sm">
     <!-- Container Start -->

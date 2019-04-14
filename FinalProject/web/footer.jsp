@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: nikit
@@ -14,12 +15,13 @@
             <div class="col-sm-6 col-12">
                 <!-- Copyright -->
                 <div class="copyright">
-                    <p>Copyright
+                    <p><fmt:message key="footer.copyright" bundle="${link}"/>
                         <script>
                             var CurrentYear = new Date().getFullYear()
                             document.write(CurrentYear)
-                        </script>. All Rights Reserved
-                    </p>
+                        </script><fmt:message key="footer.rights" bundle="${link}"/>
+
+                </p>
                 </div>
             </div>
             <div class="col-sm-6 col-12">

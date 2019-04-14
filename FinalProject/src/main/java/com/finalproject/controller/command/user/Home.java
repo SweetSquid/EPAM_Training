@@ -9,12 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 public class Home implements Command {
     @Override
     public String execute(HttpServletRequest request) {
-        System.out.println("home");
         if (request.getSession().getAttribute("inspectorId") == null) {
             JDBCTaxReturnFactory jdbcTaxReturnFactory = DaoFactory.getInstance().createTaxReturn();
             Integer inspectorId = jdbcTaxReturnFactory.getInspectorId((Integer) request.getSession().getAttribute("userId"));
             request.getSession().setAttribute("inspectorId", inspectorId);
-            System.out.println(inspectorId);
             jdbcTaxReturnFactory.close();
         }
         return "/WEB-INF/user/index.jsp";

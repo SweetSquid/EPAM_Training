@@ -1,14 +1,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+    <style>
+        .dashboard{
+            padding: 4% 15% 4% 15%;
+        }
+    </style>
+    <fmt:setBundle var="link" basename="message" scope="session" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Change requests</title>
+    <title><fmt:message key="admin.header.changerequest" bundle="${link}"/></title>
 
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -30,29 +36,31 @@
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
+                    <div class="collapse navbar-collapse w-75" id="navbarSupportedContent">
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto main-nav ">
                             <li class="nav-item ">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/logged_users">Logged
-                                    users</a>
+                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/logged_users"><fmt:message key="admin.header.logged" bundle="${link}"/></a>
                             </li>
                             <li class="nav-item ">
                                 <a class="nav-link"
-                                   href="${pageContext.request.contextPath}/taxreturn/change-user-inspector">Change
-                                    requests</a>
+                                   href="${pageContext.request.contextPath}/taxreturn/change-user-inspector"><fmt:message key="admin.header.changerequest" bundle="${link}"/></a>
                             </li>
                         </ul>
+
                         <ul class="navbar-nav ml-auto mt-10">
-                            <ul class="navbar-nav ml-auto mt-10">
-                                <li class="nav-item">
-                                    <label class="nav-link " style="font-size: 30px">Hello, admin</label>
-                                </li>
-                                <li class="nav-item logoutButton">
-                                    <a class="nav-link login-button"
-                                       href="${pageContext.request.contextPath}/taxreturn/logout">Logout</a>
-                                </li>
-                            </ul>
+                                <li class="nav-link " style="font-size: 30px">Admin  </li>
+                            <li class="nav-item logoutButton">
+                                <a class="nav-link login-button"
+                                   href="${pageContext.request.contextPath}/taxreturn/logout"><fmt:message key="common.header.log.out" bundle="${link}"/></a>
+                            </li>
+
+                            <li style="padding-top: 4.5%;"><a href="${pageContext.request.contextPath}/?lang=en"><img
+                                    src="${pageContext.request.contextPath}/images/usa-flag.png" alt=""
+                                    style="width: 40px;height: 25px;margin-left: 10px"></a></li>
+                            <li style="padding-top: 4.5%;"><a href="${pageContext.request.contextPath}/?lang=ua"><img
+                                    src="${pageContext.request.contextPath}/images/ukraine-flag.png" alt=""
+                                    style="width: 40px;height: 25px;margin-left: 10px"></a></li>
                         </ul>
                     </div>
                 </nav>
@@ -63,20 +71,20 @@
 
 
 <c:if test="${ not empty changeInspectorList}">
-    <section class="dashboard section">
-        <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0 w-100">
+    <section class="dashboard ">
+        <div class="col-md-12 offset-md-1 col-lg-12 offset-lg-0 w-100">
             <!-- Recently Favorited -->
             <div class="widget dashboard-container my-adslist" style="background: #F5F5F5">
-                <h3 class="widget-header">User's tax returns</h3>
+                <h3 class="widget-header"><fmt:message key="admin.change.returns" bundle="${link}"/></h3>
 
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">User id</th>
-                        <th scope="col">Previous inspector id</th>
-                        <th scope="col">New inspector id</th>
-                        <th scope="col">Message</th>
-                        <th scope="col">Date</th>
+                        <th scope="col"><fmt:message key="admin.change.userid" bundle="${link}"/></th>
+                        <th scope="col"><fmt:message key="admin.change.previous" bundle="${link}"/></th>
+                        <th scope="col"><fmt:message key="admin.change.new" bundle="${link}"/></th>
+                        <th scope="col"><fmt:message key="admin.change.message" bundle="${link}"/></th>
+                        <th scope="col"><fmt:message key="admin.change.date" bundle="${link}"/></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -110,7 +118,7 @@
                             </td>
                             <td>
                                 <li class="list-inline-item list-inline justify-content-center">
-                                    <a name="a" data-toggle="tooltip" data-placement="top" title="Approve"
+                                    <a name="a" data-toggle="tooltip" data-placement="top" title="<fmt:message key="common.approve" bundle="${link}"/>"
                                        class="view"
                                        href="${pageContext.request.contextPath}/taxreturn/change-user-inspector?id=${changeInspector.getId()}">
                                         <i class="fa fa-check"></i>
@@ -133,7 +141,7 @@
         <div class="container">
             <div class="row justify-content-md-center text-center">
                 <div class="col-md-8">
-                    <p style="font-size: 5em">No request</p>
+                    <p style="font-size: 5em"><fmt:message key="admin.change.request" bundle="${link}"/></p>
                 </div>
             </div>
         </div>

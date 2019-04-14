@@ -1,13 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+    <fmt:setBundle var="link" basename="message" scope="session" />
     <!-- SITE TITTLE -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login</title>
+    <title><fmt:message key="guest.login.header" bundle="${link}"/></title>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -39,11 +40,19 @@
 
                         <ul class="navbar-nav ml-auto mt-10">
                             <li class="nav-item">
-                                <a class="nav-link login-button" href="/taxreturn/login">Login</a>
+                                <a class="nav-link login-button" href="/taxreturn/login"><fmt:message key="guest.header.log.in" bundle="${link}"/></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link login-button" href="/taxreturn/registration">Registration</a>
+                                <a class="nav-link login-button" href="/taxreturn/registration"><fmt:message key="guest.header.registration" bundle="${link}"/></a>
                             </li>
+                        </ul>
+                        <ul class="d-flex">
+                            <li><a href="${pageContext.request.contextPath}/?lang=en"><img
+                                    src="${pageContext.request.contextPath}/images/usa-flag.png" alt=""
+                                    style="width: 40px;height: 25px;margin-left: 10px"></a></li>
+                            <li><a href="${pageContext.request.contextPath}/?lang=ua"><img
+                                    src="${pageContext.request.contextPath}/images/ukraine-flag.png" alt=""
+                                    style="width: 40px;height: 25px;margin-left: 10px"></a></li>
                         </ul>
                     </div>
                 </nav>
@@ -57,22 +66,22 @@
         <div class="row justify-content-center">
             <div class="col-lg-5 col-md-8 align-item-center">
                 <div class="border">
-                    <h3 class="bg-gray p-4">Login Now</h3>
+                    <h3 class="bg-gray p-4"><fmt:message key="guest.login.now" bundle="${link}"/></h3>
                     <form method="post" action="${pageContext.request.contextPath}/taxreturn/login">
                         <fieldset class="p-4">
-                            <input type="text" placeholder="Username" name="username" value="${username}" class="border p-3 w-100 my-2"
+                            <input type="text" placeholder="<fmt:message key="guest.login.username" bundle="${link}"/>" name="username" value="${username}" class="border p-3 w-100 my-2"
                                    required>
-                            <input type="password" placeholder="Password" name="password" class="border p-3 w-100 my-2"
+                            <input type="password" placeholder="<fmt:message key="guest.login.password" bundle="${link}"/>" name="password" class="border p-3 w-100 my-2"
                                    required>
                             <button type="submit"
                                     class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">
-                                Log in
+                                <fmt:message key="guest.login.log" bundle="${link}"/>
                             </button>
                             <a class="mt-3 d-inline-block text-primary"
-                               href="${pageContext.request.contextPath}/taxreturn/registration">Register Now</a>
+                               href="${pageContext.request.contextPath}/taxreturn/registration"><fmt:message key="guest.login.register" bundle="${link}"/></a>
                             <c:if test="${wrongLogin eq 'false'}">
                             <div class="alert alert-danger" script>
-                                <strong>Error!</strong> Wrong username or password
+                                <strong><fmt:message key="guest.login.error" bundle="${link}"/></strong><fmt:message key="guest.login.wrong" bundle="${link}"/>
                             </div>
                                 <c:remove var="wrongLogin"/>
                             </c:if>

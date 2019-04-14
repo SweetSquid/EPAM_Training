@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setBundle var="link" basename="message" scope="session"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +10,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Tax Return</title>
+    <title><fmt:message key="inspector.tax.headername" bundle="${link}"/></title>
 
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -18,11 +20,7 @@
 
 </head>
 <body class="body-wrapper">
-<%--display: flex;--%>
-<%--flex-direction: column;--%>
-<%--justify-content: center;--%>
-<%--position: relative;--%>
-<%--bottom: 5px;--%>
+
 <section>
     <div class="container">
         <div class="row">
@@ -30,30 +28,36 @@
                 <nav class="navbar navbar-expand-lg navbar-light navigation">
                     <a class="navbar-brand fa fa-home fa-3x" href="${pageContext.request.contextPath}/taxreturn">
                     </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent"
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto main-nav ">
-                            <li class="nav-item">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/tax-return-list">Tax
-                                    return list</a>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/new-tax-return"><fmt:message key="user.header.new" bundle="${link}"/></a>
                             </li>
-
+                            <li class="nav-item ">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/action-report-list"><fmt:message key="user.header.actionList" bundle="${link}"/></a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/history"><fmt:message key="user.header.history" bundle="${link}"/></a>
+                            </li>
                         </ul>
                         <ul class="navbar-nav ml-auto mt-10">
-                            <ul class="navbar-nav ml-auto mt-10">
-                                <li class="nav-item">
-                                    <label class="nav-link " style="font-size: 30px">Hello, ${fullname}</label>
-                                </li>
-                                <li class="nav-item logoutButton ">
-                                    <a class="nav-link login-button "
-                                       href="${pageContext.request.contextPath}/taxreturn/logout">Logout</a>
-                                </li>
-                            </ul>
+                            <li class="nav-item">
+                                <label class="nav-link " style="font-size: 30px">${fullname}</label>
+                            </li>
+                            <li class="nav-item logoutButton">
+                                <a class="nav-link login-button"
+                                   href="${pageContext.request.contextPath}/taxreturn/logout"><fmt:message key="common.header.log.out" bundle="${link}"/></a>
+                            </li>
+                            <li style="padding-top: 4.5%;"><a href="${pageContext.request.contextPath}/?lang=en"><img
+                                    src="${pageContext.request.contextPath}/images/usa-flag.png" alt=""
+                                    style="width: 40px;height: 25px;margin-left: 10px"></a></li>
+                            <li style="padding-top: 4.5%;"><a href="${pageContext.request.contextPath}/?lang=ua"><img
+                                    src="${pageContext.request.contextPath}/images/ukraine-flag.png" alt=""
+                                    style="width: 40px;height: 25px;margin-left: 10px"></a></li>
                         </ul>
                     </div>
                 </nav>
@@ -76,80 +80,79 @@
 </section>
 
 <c:if test="${not empty taxReturnList}">
-<section class="dashboard section">
-    <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
-        <!-- Recently Favorited -->
-        <div class="widget dashboard-container my-adslist" style="background: #F5F5F5">
-            <h3 class="widget-header">Tax returns</h3>
+    <section class="dashboard section">
+        <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
+            <!-- Recently Favorited -->
+            <div class="widget dashboard-container my-adslist" style="background: #F5F5F5">
+                <h3 class="widget-header"><fmt:message key="inspector.tax.return" bundle="${link}"/></h3>
 
-            <table class="table ">
-                <thead>
-                <tr>
-                    <th>User</th>
-                    <th class="text-center">Category</th>
-                    <th class="text-center">Action</th>
-                </tr>
-                </thead>
-                <c:forEach items="${taxReturnList}" var="taxReturn">
-                    <tbody>
+                <table class="table ">
+                    <thead>
                     <tr>
-                        <td class="product-details">
-                            <span class="categories ol1"><strong>User id:</strong> <c:out
-                                    value="${taxReturn.getUserId()}"/></span>
-                            <span class="categories ol1"><strong>Wage:</strong> <c:out
-                                    value="${taxReturn.getWage()}"/></span>
-                            <span class="categories ol1"><strong>Military collection:</strong> <c:out
-                                    value="${taxReturn.getMilitaryCollection()}"/></span>
-                            <span class="categories ol1"><strong>Income tax:</strong> <c:out
-                                    value="${taxReturn.getIncomeTax()}"/></span>
-                            <span class="categories ol1"><strong>Posted on: </strong><time> <c:out
-                                    value="${taxReturn.getDate()}"/></time> </span>
-                        </td>
-                        <td class="product-category"><span class="categories ol1 align-content-center"><c:out
-                                value="${taxReturn.getCategory()}"/></span></td>
-                        <td class="action" data-title="Action">
-                            <div class="">
-                                <ul class="list-inline justify-content-center">
-                                    <li class="list-inline-item">
-                                        <a name="a" data-toggle="tooltip" data-placement="top" title="Approve"
-                                           class="view"
-                                           href="${pageContext.request.contextPath}/taxreturn/approve?id=${taxReturn.getId()}">
-                                            <i class="fa fa-check"></i>
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a class="edit" data-toggle="tooltip" data-placement="top" title="Edit"
-                                           href="${pageContext.request.contextPath}/taxreturn/edit?id=${taxReturn.getId()}">
-                                            <i class="fa fa-pencil"></i>
-                                        </a>
-                                    </li>
-
-                                </ul>
-                            </div>
-                        </td>
+                        <th><fmt:message key="inspector.tax.user" bundle="${link}"/></th>
+                        <th class="text-center"><fmt:message key="inspector.tax.category" bundle="${link}"/></th>
+                        <th class="text-center"><fmt:message key="inspector.tax.action" bundle="${link}"/></th>
                     </tr>
+                    </thead>
+                    <c:forEach items="${taxReturnList}" var="taxReturn">
+                        <tbody>
+                        <tr>
+                            <td class="product-details">
+                            <span class="categories ol1"><strong><fmt:message key="inspector.tax.userId" bundle="${link}"/>:</strong> <c:out
+                                    value="${taxReturn.getUserId()}"/></span>
+                                <span class="categories ol1"><strong><fmt:message key="inspector.tax.wage" bundle="${link}"/>:</strong> <c:out
+                                        value="${taxReturn.getWage()}"/></span>
+                                <span class="categories ol1"><strong><fmt:message key="inspector.tax.military" bundle="${link}"/>:</strong> <c:out
+                                        value="${taxReturn.getMilitaryCollection()}"/></span>
+                                <span class="categories ol1"><strong><fmt:message key="inspector.tax.income" bundle="${link}"/>:</strong> <c:out
+                                        value="${taxReturn.getIncomeTax()}"/></span>
+                                <span class="categories ol1"><strong><fmt:message key="inspector.tax.posted" bundle="${link}"/>: </strong><time> <c:out
+                                        value="${taxReturn.getDate()}"/></time> </span>
+                            </td>
+                            <td class="product-category"><span class="categories ol1 align-content-center"><c:out
+                                    value="${taxReturn.getCategory()}"/></span></td>
+                            <td class="action" data-title="Action">
+                                <div class="">
+                                    <ul class="list-inline justify-content-center">
+                                        <li class="list-inline-item">
+                                            <a name="a" data-toggle="tooltip" data-placement="top" title="<fmt:message key="common.approve" bundle="${link}"/>"
+                                               class="view"
+                                               href="${pageContext.request.contextPath}/taxreturn/approve?id=${taxReturn.getId()}">
+                                                <i class="fa fa-check"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a class="edit" data-toggle="tooltip" data-placement="top" title="<fmt:message key="common.edit" bundle="${link}"/>"
+                                               href="${pageContext.request.contextPath}/taxreturn/edit?id=${taxReturn.getId()}">
+                                                <i class="fa fa-pencil"></i>
+                                            </a>
+                                        </li>
 
-                    </tbody>
-                </c:forEach>
-            </table>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </c:forEach>
+                </table>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 </c:if>
 <c:if test="${empty taxReturnList}">
     <section class="overly  section-sm" style="margin-top:20vh">
         <!-- Container Start -->
         <div class="container">
             <div class="row justify-content-md-center text-center">
-                <div class="col-md-8" >
-                    <p style="font-size: 5em">No new tax returns</p>
+                <div class="col-md-8">
+                    <p style="font-size: 5em"><fmt:message key="inspector.tax.noreturn" bundle="${link}"/></p>
                 </div>
             </div>
         </div>
         <!-- Container End -->
     </section>
 </c:if>
-
 
 
 <jsp:include page="${pageContext.request.contextPath}/footer.jsp"/>
