@@ -8,7 +8,7 @@
     <fmt:setBundle var="link" basename="message" scope="session" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <title><fmt:message key="user.edit.name" bundle="${link}"/></title>
     <%--<title><fmt:message key="" bundle="${link}"/></title>--%>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -73,8 +73,8 @@
                     <h3 class="bg-gray p-4">Edit tax return</h3>
                     <form method="post" action="${pageContext.request.contextPath}/taxreturn/action-report-list/edit">
                         <fieldset class="p-4">
-                            <textarea name="message" class="border p-3 w-100 my-3 " placeholder="Enter something..." maxlength="800" style="resize: none" readonly>${message}</textarea>
-                            <label class="w-100"> Тип налога
+                            <textarea name="message" class="border p-3 w-100 my-3 " placeholder="Enter something..." maxlength="299" style="resize: none" readonly>${message}</textarea>
+                            <label class="w-100"> <fmt:message key="user.edit.name" bundle="${link}"/>
                                 <select name="taxCategory" class="w-100 form-control mt-lg-2 mt-md-2 border"
                                         style=" color: #666666; font-size: 14px; font-weight: 400; font-family: sans-serif">
                                     <c:forEach items="${taxList}" var="tax">
@@ -82,16 +82,16 @@
                                     </c:forEach>
                                 </select>
                             </label>
-                            <input type="text" name="wage" value="${taxReturn.getWage()}" placeholder="Wage" class="border p-3 w-100 my-2" required> <br>
-                            <input type="text" name="militaryCollection" value="${taxReturn.getMilitaryCollection()}" placeholder="Military Collection (1%)" class="border p-3 w-100 my-2" required> <br>
-                            <input type="text" name="incomeTax" value="${taxReturn.getIncomeTax()}" placeholder="Income tax (20%)" class="border p-3 w-100 my-2" required> <br>
+                            <input type="text" name="wage" value="${taxReturn.getWage()}" placeholder="<fmt:message key="user.new.wage" bundle="${link}"/>" class="border p-3 w-100 my-2" required> <br>
+                            <input type="text" name="militaryCollection" value="${taxReturn.getMilitaryCollection()}" placeholder="<fmt:message key="user.new.military" bundle="${link}"/>" class="border p-3 w-100 my-2" required> <br>
+                            <input type="text" name="incomeTax" value="${taxReturn.getIncomeTax()}" placeholder="<fmt:message key="user.new.income" bundle="${link}"/>" class="border p-3 w-100 my-2" required> <br>
                                 <button type="submit"
                                         class="d-block py-3 px-4 bg-primary text-white border-0 rounded font-weight-bold">
-                                    Send tax return
+                                    <fmt:message key="user.new.send" bundle="${link}"/>
                                 </button>
                                 <c:if test="${not empty inspectorId}">
                                     <a class="mt-3 d-inline-block text-primary"
-                                       href="${pageContext.request.contextPath}/taxreturn/change-inspector">Change inspector</a>
+                                       href="${pageContext.request.contextPath}/taxreturn/change-inspector"><fmt:message key="user.new.changeInspector" bundle="${link}"/></a>
                                 </c:if>
                         </fieldset>
                     </form>

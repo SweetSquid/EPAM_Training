@@ -2,7 +2,6 @@ package com.finalproject.controller;
 
 
 import com.finalproject.controller.command.Command;
-import com.finalproject.model.entity.TaxReturn;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -32,7 +31,6 @@ public class Servlet extends HttpServlet {
     @SuppressWarnings("unchecked")
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("taxList", TaxReturn.Category.values());
         String path = request.getRequestURI();
         String logout = (String) request.getSession().getAttribute("logout");
 

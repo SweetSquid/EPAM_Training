@@ -26,7 +26,6 @@ public class JDBCUserFactory implements UserDao {
 
     @Override
     public boolean create(User user) throws NotUniqueUsernameException, NotUniqueEmailException {
-        //TODO try to create interface NotUniqueException
         if (findByType("username", user.getUsername()).isPresent()) {
             throw new NotUniqueUsernameException(user.getUsername());
         }

@@ -1,35 +1,32 @@
 package com.finalproject.controller.command.admin;
 
 import com.finalproject.controller.command.Command;
-import com.finalproject.model.dao.DaoFactory;
-import com.finalproject.model.dao.impl.JDBCChangeInspectorReportFactory;
-import com.finalproject.model.dao.impl.JDBCUserFactory;
+import com.finalproject.model.dao.service.ChangeInspectorReportService;
+import com.finalproject.model.dao.service.UserService;
 import com.finalproject.model.entity.ChangeInspectorReport;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class ChangeUserInspector implements Command {
+    //TODO смена инспектора некорректная
     @Override
     public String execute(HttpServletRequest request) {
-        JDBCChangeInspectorReportFactory jdbcChangeInspectorReportFactory= DaoFactory.getInstance().createChangeInspectorReport();
-        List<ChangeInspectorReport> changeInspectorList = jdbcChangeInspectorReportFactory.readAll();
-        JDBCUserFactory userFactory = DaoFactory.getInstance().createUser();
-        List<Integer> inspectorList  = userFactory.getInspectorIdList();
+        List<ChangeInspectorReport> changeInspectorList = ChangeInspectorReportService.readAll();
+        List<Integer> inspectorList  = UserService.getInspectorIdList();
         request.setAttribute("inspectorList", inspectorList);
 
         if (request.getParameter("id") != null){
             int id = Integer.parseInt(request.getParameter("id"));
-            ChangeInspectorReport changeInspectorReport = jdbcChangeInspectorReportFactory.readId(id);
+            ChangeInspectorReport changeInspectorReport = ChangeInspectorReportService.id(id);
             changeInspectorList.remove(changeInspectorReport);
+            System.out.println("ChangeUserInspector.java id:"+ request.getSession().getAttribute("newInspectorId"));
             changeInspectorReport.setNewInspectorId((Integer) request.getSession().getAttribute("newInspectorId"));
             changeInspectorReport.setMessage("");
             changeInspectorReport.setStatus(ChangeInspectorReport.Status.APPROVED);
-            jdbcChangeInspectorReportFactory.update(changeInspectorReport, id);
+            ChangeInspectorReportService.update(changeInspectorReport, id);
         }
         request.setAttribute("changeInspectorList", changeInspectorList);
-        userFactory.close();
-        jdbcChangeInspectorReportFactory.close();
         return "/WEB-INF/admin/change-user-inspector.jsp";
     }
 }

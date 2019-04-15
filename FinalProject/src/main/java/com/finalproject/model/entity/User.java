@@ -64,7 +64,6 @@ public class User {
     }
 
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -103,6 +102,6 @@ public class User {
     public enum Role {
         ADMIN,
         INSPECTOR,
-        USER;
+        USER
     }
 }

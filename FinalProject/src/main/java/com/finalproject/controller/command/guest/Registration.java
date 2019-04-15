@@ -1,14 +1,7 @@
 package com.finalproject.controller.command.guest;
 
 import com.finalproject.controller.command.Command;
-import com.finalproject.model.dao.DaoFactory;
-import com.finalproject.model.dao.impl.JDBCUserFactory;
-import com.finalproject.model.entity.User;
-import com.finalproject.model.entity.User.Role;
-import com.finalproject.model.exception.NotUniqueEmailException;
-import com.finalproject.model.exception.NotUniqueIdCodeException;
-import com.finalproject.model.exception.NotUniquePhoneException;
-import com.finalproject.model.exception.NotUniqueUsernameException;
+import com.finalproject.model.dao.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,39 +15,18 @@ public class Registration implements Command {
         String idCode = request.getParameter("idCode");
         String phone = request.getParameter("phone");
 
-        request.setAttribute("fullName",fullName);
-        request.setAttribute("username",username);
-        request.setAttribute("email",email);
-        request.setAttribute("idCode",idCode);
-        request.setAttribute("phone",phone);
+        request.setAttribute("fullName", fullName);
+        request.setAttribute("username", username);
+        request.setAttribute("email", email);
+        request.setAttribute("idCode", idCode);
+        request.setAttribute("phone", phone);
 
-        if (fullName != null && username != null
-                && email != null && password != null
-                && idCode != null && phone != null) {
-            DaoFactory daoFactory = DaoFactory.getInstance();
-            JDBCUserFactory dao = daoFactory.createUser();
-            User user = new User();
-            user.setRole(Role.USER);
-            user.setFullname(fullName);
-            user.setUsername(username);
-            user.setEmail(email);
-            user.setPassword(password);
-            user.setPhone(phone);
-            user.setIdCode(idCode);
-            try {
-                dao.create(user);
-            } catch (NotUniqueUsernameException | NotUniquePhoneException | NotUniqueEmailException | NotUniqueIdCodeException e){
-                request.setAttribute("notUnique", e.getMessage());
-                return "/registration.jsp";
-            }
-            dao.close();
+        if (UserService.register(request, fullName, username, email, idCode, phone, password)) {
             new Login().execute(request);
             return "redirect:taxreturn";
         }
-
         return "/registration.jsp";
     }
-
 }
 
 

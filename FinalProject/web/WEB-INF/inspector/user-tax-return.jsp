@@ -28,28 +28,25 @@
                 <nav class="navbar navbar-expand-lg navbar-light navigation">
                     <a class="navbar-brand fa fa-home fa-3x" href="${pageContext.request.contextPath}/taxreturn">
                     </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent"
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto main-nav ">
                             <li class="nav-item ">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/new-tax-return"><fmt:message key="user.header.new" bundle="${link}"/></a>
+                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/tax-return-list"><fmt:message key="inspector.header.taxreturn.list" bundle="${link}"/></a>
                             </li>
-                            <li class="nav-item ">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/action-report-list"><fmt:message key="user.header.actionList" bundle="${link}"/></a>
-                            </li>
-                            <li class="nav-item ">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/taxreturn/history"><fmt:message key="user.header.history" bundle="${link}"/></a>
-                            </li>
+                            <li class="nav-item dropdown dropdown-slide">
+
                         </ul>
                         <ul class="navbar-nav ml-auto mt-10">
                             <li class="nav-item">
                                 <label class="nav-link " style="font-size: 30px">${fullname}</label>
                             </li>
                             <li class="nav-item logoutButton">
-                                <a class="nav-link login-button"
+                                <a class="nav-link login-button "
                                    href="${pageContext.request.contextPath}/taxreturn/logout"><fmt:message key="common.header.log.out" bundle="${link}"/></a>
                             </li>
                             <li style="padding-top: 4.5%;"><a href="${pageContext.request.contextPath}/?lang=en"><img

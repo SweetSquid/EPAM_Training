@@ -9,7 +9,7 @@ import java.util.Locale;
 
 public class LangFilter implements Filter {
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 

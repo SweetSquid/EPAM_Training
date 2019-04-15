@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <fmt:setBundle var="link" basename="message" scope="session" />
+    <fmt:setBundle var="link" basename="message" scope="session"/>
 
     <!-- SITE TITTLE -->
     <meta charset="utf-8">
@@ -16,9 +16,10 @@
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="${pageContext.request.contextPath}/webjars/jquery/3.0.0/jquery.js"></script>
+    <script src="${pageContext.request.contextPath}/webjars/jquery/"></script>
 
 </head>
-
+<%--\\TODO already have an account?--%>
 <body class="body-wrapper">
 <section>
     <div class="container">
@@ -36,11 +37,13 @@
                         <ul class="navbar-nav ml-auto mt-10">
                             <li class="nav-item">
                                 <a class="nav-link login-button"
-                                   href="${pageContext.request.contextPath}/taxreturn/login"><fmt:message key="guest.header.log.in" bundle="${link}"/></a>
+                                   href="${pageContext.request.contextPath}/taxreturn/login"><fmt:message
+                                        key="guest.header.log.in" bundle="${link}"/></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link login-button"
-                                   href="${pageContext.request.contextPath}/taxreturn/registration"><fmt:message key="guest.header.registration" bundle="${link}"/></a>
+                                   href="${pageContext.request.contextPath}/taxreturn/registration"><fmt:message
+                                        key="guest.header.registration" bundle="${link}"/></a>
                             </li>
                         </ul>
                         <ul class="d-flex">
@@ -64,26 +67,41 @@
             <div class="col-lg-5 col-md-8 align-item-center">
                 <div class="border border">
                     <h3 class="bg-gray p-4"><fmt:message key="guest.login.register" bundle="${link}"/></h3>
-                    <form method="post" action="${pageContext.request.contextPath}/taxreturn/registration">
+                    <form name="registr" method="post"
+                          action="${pageContext.request.contextPath}/taxreturn/registration">
                         <fieldset class="p-4">
-                            <input type="text" name="fullName" value="${fullName}" placeholder="<fmt:message key="guest.reg.fullname" bundle="${link}"/>" class="border p-3 w-100 my-2"
+                            <input type="text" name="fullName" value="${fullName}"
+                                   placeholder="<fmt:message key="guest.reg.fullname" bundle="${link}"/>"
+                                   class="border p-3 w-100 my-2"
                                    required>
-                            <input type="text" name="username" value="${username}" placeholder="<fmt:message key="guest.reg.username" bundle="${link}"/>" class="border p-3 w-100 my-2"
+                            <input type="text" name="username" value="${username}"
+                                   placeholder="<fmt:message key="guest.reg.username" bundle="${link}"/>"
+                                   class="border p-3 w-100 my-2"
                                    required>
-                            <input type="text" name="idCode" value="${idCode}" placeholder="<fmt:message key="guest.reg.idcode" bundle="${link}"/>" class="border p-3 w-100 my-2"
+                            <input type="text" name="idCode" value="${idCode}" maxlength="8"
+                                   placeholder="<fmt:message key="guest.reg.idcode" bundle="${link}"/>"
+                                   class="border p-3 w-100 my-2"
                                    required>
-                            <input type="text" name="phone" value="${phone}" placeholder="<fmt:message key="guest.reg.phone" bundle="${link}"/>" class="border p-3 w-100 my-2"
+                            <input type="text" name="phone" value="${phone}"
+                                   placeholder="<fmt:message key="guest.reg.phone" bundle="${link}"/>"
+                                   class="border p-3 w-100 my-2"
                                    required>
-                            <input type="email" name="email" value="${email}" placeholder="<fmt:message key="guest.reg.email" bundle="${link}"/>" class="border p-3 w-100 my-2"
+                            <input type="email" name="email" value="${email}"
+                                   placeholder="<fmt:message key="guest.reg.email" bundle="${link}"/>"
+                                   class="border p-3 w-100 my-2"
                                    required>
-                            <input type="password" name="password" placeholder="<fmt:message key="guest.reg.password" bundle="${link}"/>" class="border p-3 w-100 my-2"
+                            <input type="password" name="password"
+                                   placeholder="<fmt:message key="guest.reg.password" bundle="${link}"/>"
+                                   class="border p-3 w-100 my-2"
                                    required>
                             <div class="loggedin-forgot d-inline-flex my-3">
                                 <button type="submit"
                                         class="d-block py-3 px-4 bg-primary text-white border-0 rounded font-weight-bold">
                                     <fmt:message key="guest.login.register" bundle="${link}"/>
                                 </button>
-                            </div>
+                            </div><br>
+                            <a class="mt-3 d-inline-block text-primary"
+                               href="${pageContext.request.contextPath}/taxreturn/login"><fmt:message key="guest.reg.haveAcc" bundle="${link}"/></a>
                             <c:if test="${notUnique != null}">
                                 <div class="alert alert-danger">
                                         ${notUnique}
@@ -104,8 +122,8 @@
 </html>
 
 <script>
-    window.setTimeout(function() {
-        $(".alert").fadeTo(500, 0).slideUp(500, function(){
+    window.setTimeout(function () {
+        $(".alert").fadeTo(500, 0).slideUp(500, function () {
             $(this).remove();
         });
     }, 2500);

@@ -73,7 +73,7 @@
                     <h3 class="bg-gray p-4"><fmt:message key="user.change.name" bundle="${link}"/></h3>
                     <form method="post" action="${pageContext.request.contextPath}/taxreturn/change-inspector">
                         <fieldset class="p-4">
-                            <textarea name="message" class="border p-3 w-100 my-3 " placeholder="<fmt:message key="user.change.reason" bundle="${link}"/>" maxlength="800" style="resize: none"></textarea>
+                            <textarea name="message" class="border p-3 w-100 my-3 " placeholder="<fmt:message key="user.change.reason" bundle="${link}"/>" maxlength="299" style="resize: none"></textarea>
                             <div class="loggedin-forgot d-inline-flex my-1">
                                 <button type="submit"
                                         class="d-block py-3 px-4 bg-primary text-white border-0 rounded font-weight-bold">

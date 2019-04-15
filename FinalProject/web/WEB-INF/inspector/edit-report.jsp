@@ -87,7 +87,7 @@
                                 <li><span class="categories ol1"><strong><fmt:message key="inspector.tax.posted" bundle="${link}"/>:</strong><time> <c:out
                                         value="${editAction.getDate()}"/></time> </span></li>
                             </ul>
-                            <textarea name="message" class="border p-3 w-100 my-3 " placeholder="<fmt:message key="inspector.edit.enter" bundle="${link}"/>" maxlength="800" style="resize: none"></textarea>
+                            <textarea name="message"  class="border p-3 w-100 my-3 " placeholder="<fmt:message key="inspector.edit.enter" bundle="${link}"/>" maxlength="299" style="resize: none"></textarea>
 
                             <div class="loggedin-forgot d-inline-flex my-1">
                                 <button type="submit"

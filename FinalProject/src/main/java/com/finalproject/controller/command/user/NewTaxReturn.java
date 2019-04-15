@@ -1,15 +1,11 @@
 package com.finalproject.controller.command.user;
 
 import com.finalproject.controller.command.Command;
-import com.finalproject.model.dao.DaoFactory;
-import com.finalproject.model.dao.UserDao;
-import com.finalproject.model.dao.impl.JDBCTaxReturnFactory;
+import com.finalproject.model.dao.service.TaxReturnService;
 import com.finalproject.model.dao.service.UserService;
 import com.finalproject.model.entity.TaxReturn;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -18,37 +14,32 @@ public class NewTaxReturn implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         Integer userId = (Integer) request.getSession().getAttribute("userId");
+        request.setAttribute("taxList", TaxReturn.Category.values());
 
-        if (request.getParameter("taxCategory") != null && userId != null ) {
-            DaoFactory daoFactory = DaoFactory.getInstance();
-            JDBCTaxReturnFactory dao = daoFactory.createTaxReturn();
-            UserDao userDao = daoFactory.createUser();
-
+        if (request.getParameter("taxCategory") != null && userId != null) {
             TaxReturn taxReturn = new TaxReturn();
             taxReturn.setUserId(userId);
+
             if (!UserService.userHasInspector(userId)) {
-                System.out.println(Arrays.toString(userDao.getInspectorIdList().toArray()));
-                taxReturn.setInspectorId(getRandomElement(userDao.getInspectorIdList()));
-            }else{
-                taxReturn.setInspectorId( dao.getInspectorId(userId));
+                taxReturn.setInspectorId(getRandomElement(UserService.getInspectorIdList()));
+            } else {
+                taxReturn.setInspectorId(TaxReturnService.getInspectorId(userId));
             }
-            taxReturn.setCategory(request.getParameter("taxCategory"));
-            taxReturn.setDate(LocalDateTime.now());
-            taxReturn.setWage(Double.parseDouble(request.getParameter("wage")));
-            taxReturn.setMilitaryCollection(Double.parseDouble(request.getParameter("militaryCollection")));
-            taxReturn.setIncomeTax(Double.parseDouble(request.getParameter("incomeTax")));
-            request.getSession().setAttribute("inspectorId",taxReturn.getInspectorId());
-            dao.create(taxReturn);
-            userDao.close();
-            dao.close();
+            String taxCategory = request.getParameter("taxCategory");
+            Double wage = Double.parseDouble(request.getParameter("wage"));
+            Double militaryCollection = Double.parseDouble(request.getParameter("militaryCollection"));
+            Double incomeTax = Double.parseDouble(request.getParameter("incomeTax"));
+
+            taxReturn = TaxReturnService.create(taxReturn.getUserId(),taxReturn.getInspectorId(),taxCategory,
+                    wage, militaryCollection, incomeTax);
+            request.getSession().setAttribute("inspectorId", taxReturn.getInspectorId());
             return "redirect:taxreturn";
         }
 
         return "/WEB-INF/user/new-tax-return.jsp";
     }
 
-    private int getRandomElement(List<Integer> list)
-    {
+    private int getRandomElement(List<Integer> list) {
         Random rand = new Random();
         return list.get(rand.nextInt(list.size()));
     }
